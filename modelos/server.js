@@ -1,23 +1,18 @@
-import express, { json } from 'express';
 import  'dotenv/config';
-import cors from 'cors';
-import { conexionDB } from '../DB/connect.js';
-
-import routerUsuario from '../router/usuarios.js';
-import  routerAuth  from '../router/auth.js';
+import  express        from 'express';
+import  cors           from 'cors';
+import  { conexionDB } from '../DB/connect.js';
+import  routerUsuario  from '../router/usuarios.js';
+import  routerAuth     from '../router/auth.js';
+import  routerAgenda    from '../router/agenda.js'
 
 
 export class Server {
-
     constructor(){
-
-        this.app = express();
-        this.puerto = process.env.PUERTO;
+        this.app        = express();
         this.conexionDb = conexionDB;
-
         this.middlewares();
         this.router();
-
     }
 
     middlewares(){
@@ -26,17 +21,16 @@ export class Server {
     }
 
     router(){
+        this.app.use( express.static('public'));
         this.app.use('/api' , routerUsuario );
         this.app.use('/auth' , routerAuth );
+        this.app.use('/agenda' , routerAgenda );
     }
 
-
     iniciar(){
-
-        this.app.listen( this.puerto , () => {
-            console.log('Server Corriendo en el puerto ', this.puerto);
+        this.app.listen(process.env.PORT , () => {
+            console.log('Server Corriendo en el puerto ', process.env.PORT);
         });
-
         this.conexionDb();
     }
 }

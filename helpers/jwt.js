@@ -1,5 +1,5 @@
 
-import  jwt from "jsonwebtoken";
+import  jwt, { decode } from "jsonwebtoken";
 import { SchemaUsuario } from "../schemas/usuarios.js";
 
 
@@ -24,7 +24,7 @@ export const generarJWT = async( req , res , next ) => {
 }
 
 
-export const validarToken = async( req , res , next) => {
+export const validarUsuarioAdmin = async( req , res , next) => {
 
     const { authorization } = req.headers;
     try{
@@ -40,5 +40,22 @@ export const validarToken = async( req , res , next) => {
         console.log(err);
        return res.status(400).json({ msg:'token invalido'})
     }
+    next();
+}
+
+export const validarUsuarioConectado = (req , res , next) => {
+
+    const { authorization } = req.headers;
+
+    let decode;
+    try{
+        decode = jwt.verify( authorization , process.env.secretKey);
+   
+    }catch(error){
+        console.log(error)
+        return res.status(400).json({msg:'Error de autenticación'});
+    }
+
+    req.id = decode;
     next();
 }

@@ -32,7 +32,7 @@ export const consultarUsuarios = async( req , res ) => {
     }
 }
 
-export const desactivarUsuario = async( req , res ) => {
+export const actualizarUsuario = async( req , res ) => {
 
     const { id } = req.params;
     const { _id , password , google , rol , estado , ...rest } = req.body;
@@ -74,4 +74,19 @@ export const consultarUsuario = async( req , res ) => {
         console.log(err)
         res.status(500).json({msg: 'Error en la conexión, contacte a su administrador'})
     }
+}
+
+export const actualizarRol = async( req , res) => {
+
+    const { id } = req.body;
+    try{
+        const usuario = await SchemaUsuario.findByIdAndUpdate( id , {rol : 'admin'})
+        console.log(usuario)
+        if(usuario.estado === false)    return res.status(400).json({msg:'Usuario se encuentra desabilitado no se puede cumplir con su requerimiento'})
+        if(usuario.rol    === 'admin')  return res.status(400).json({msg:'Usuario ya es administrador'});
+        res.status(200).json({msg : 'Rol del usuario actualizado con exito !!!'})
+    }catch(error){
+        res.status(500).json({msg: 'Error en la conexión, contacte a su administrador' });
+    }
+
 }

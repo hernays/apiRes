@@ -1,7 +1,7 @@
 import express from 'express';
 import { check } from 'express-validator';
-import { consultarUsuarios, desactivarUsuario, usuariosGuardar , borrarUsuario , consultarUsuario } from '../controllers/usuarios.controllers.js';
-import { validarToken } from '../helpers/jwt.js';
+import { consultarUsuarios, actualizarUsuario, usuariosGuardar , borrarUsuario , consultarUsuario, actualizarRol } from '../controllers/usuarios.controllers.js';
+import { validarUsuarioAdmin } from '../helpers/jwt.js';
 import { validarCampos , validarEmailExiste, validarRol , validarId } from '../helpers/validarCampos.js';
 
 
@@ -39,14 +39,15 @@ routerUsuario.put('/usuario/:id', [
     check('rol').custom( validarRol ),
     validarCampos,
     validarEmailExiste
-] ,desactivarUsuario);
+] ,actualizarUsuario);
 
 routerUsuario.delete('/usuario/:id' ,[
-    validarToken,
+    validarUsuarioAdmin,
     check('id', 'el id no es valido').isMongoId(),
     check('id').custom( validarId ),
     validarCampos
 ], borrarUsuario);
 
+routerUsuario.post('/rol' , [validarUsuarioAdmin] , actualizarRol )
 
 export default routerUsuario;

@@ -9,3 +9,9 @@ export const authController = async(req , res) => {
 
 }
 
+export const authUsuarios = (req , res ) => {
+    
+      const id = req.id;
+      res.status(200).json({id});
+}
+

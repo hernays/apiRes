@@ -1,9 +1,9 @@
 import  express  from "express";
 import { check } from "express-validator";
 
-import { authController }  from "../controllers/auth.controller.js";
-import { generarJWT } from "../helpers/jwt.js";
-import { validarCampos} from "../helpers/validarCampos.js";
+import { authController, authUsuarios }  from "../controllers/auth.controller.js";
+import { generarJWT , validarUsuarioConectado } from "../helpers/jwt.js";
+import { validarCampos } from "../helpers/validarCampos.js";
 
 
 const routerAuth = express();
@@ -14,6 +14,8 @@ routerAuth.post('/login', [
     generarJWT,
     validarCampos
 ], authController);
+
+routerAuth.get('/authorization', [validarUsuarioConectado] , authUsuarios)
 
 
 

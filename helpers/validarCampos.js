@@ -37,3 +37,8 @@ export const validarId = async ( id ) => {
     const validar = await SchemaUsuario.findById(id);
     if(!validar) throw new Error('No existe el usuario');
 }
+
+export const validarhora = async ( hora ) => {
+    if(hora === 0) throw new Error('la hora es obligatoria');
+}
+
