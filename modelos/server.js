@@ -23,8 +23,8 @@ export class Server {
     router(){
         this.app.use( express.static('public'));
         this.app.use('/api' , routerUsuario );
-        this.app.use('/auth' , routerAuth );
-        this.app.use('/agenda' , routerAgenda );
+        this.app.use('/api/auth' , routerAuth );
+        this.app.use('/api/agenda' , routerAgenda );
     }
 
     iniciar(){
