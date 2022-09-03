@@ -19,7 +19,7 @@ export const generarJWT = async( req , res , next ) => {
     res.status(400).json({ msg: 'la contraseña es invalida'});
 
     const uid = usuario[0]._id;
-    req.token = jwt.sign(JSON.stringify(uid) , process.env.secretKey );
+    req.token = jwt.sign(JSON.stringify(uid) , 'hernaysgonzalez ');
     next();
 }
 
@@ -28,7 +28,7 @@ export const validarUsuarioAdmin = async( req , res , next) => {
 
     const { authorization } = req.headers;
     try{
-    const decode = jwt.verify( authorization , process.env.secretKey);
+    const decode = jwt.verify( authorization , 'hernaysgonzalez');
     const usuario = await SchemaUsuario.find({decode});
     if(usuario[0].rol !== 'admin'){
         return res.status(400).json({
@@ -49,7 +49,7 @@ export const validarUsuarioConectado = (req , res , next) => {
 
     let decode;
     try{
-        decode = jwt.verify( authorization , process.env.secretKey);
+        decode = jwt.verify( authorization , 'hernaysgonzalez');
    
     }catch(error){
         console.log(error)
