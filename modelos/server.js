@@ -6,6 +6,9 @@ import  routerUsuario  from '../router/usuarios.js';
 import  routerAuth     from '../router/auth.js';
 import  routerAgenda    from '../router/agenda.js'
 
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
 
 export class Server {
     constructor(){
@@ -13,6 +16,8 @@ export class Server {
         this.conexionDb = conexionDB;
         this.middlewares();
         this.router();
+        this.__filename = fileURLToPath(import.meta.url);
+        this.__dirname(this.__filename);
     }
 
     middlewares(){
@@ -26,7 +31,7 @@ export class Server {
         this.app.use('/api/auth' , routerAuth );
         this.app.use('/api/agenda' , routerAgenda );
         this.app.get('/*', ( req ,res ) => {
-             res.sendFile(__dirname + '/index.html')
+             res.sendFile(this.__dirname + '/index.html')
         })
     }
 
