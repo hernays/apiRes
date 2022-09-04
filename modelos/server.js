@@ -37,8 +37,8 @@ export class Server {
     }
 
     iniciar(){
-        this.app.listen(process.env.PORT || 80, () => {
-            console.log('Server Corriendo en el puerto ', process.env.PORT);
+        this.app.listen(80, () => {
+            console.log('Server Corriendo en el puerto ', 80);
         });
         this.conexionDb();
     }
