@@ -2,7 +2,7 @@
   "name": "dubeNails",
   "short_name": "dubeNails",
   "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "background_color": "black",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
