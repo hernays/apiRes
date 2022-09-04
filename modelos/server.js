@@ -31,7 +31,7 @@ export class Server {
         this.app.use('/api/auth' , routerAuth );
         this.app.use('/api/agenda' , routerAgenda );
         this.app.get('/*', ( req ,res ) => {
-             res.sendFile(this.__dirname.replace('/modelos', '') + '../public/index.html')
+             res.sendFile(this.__dirname.replace('/modelos', '') + '/public/index.html')
         })
     }
 
