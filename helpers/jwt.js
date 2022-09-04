@@ -19,7 +19,7 @@ export const generarJWT = async( req , res , next ) => {
     res.status(400).json({ msg: 'la contraseña es invalida'});
 
     const uid = usuario[0]._id;
-    req.token = jwt.sign(JSON.stringify(uid) , 'hernaysgonzalez ');
+    req.token = jwt.sign(JSON.stringify(uid) , 'hernaysgonzalez');
     next();
 }
 
