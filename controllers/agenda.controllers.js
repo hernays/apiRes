@@ -48,8 +48,9 @@ export const borrarHoras = async(req , res) => {
 
     const { nombre , dia } = req.body;
 
+    console.log(nombre , dia)
     try{
-        const agenda = await SchemaAgendas.remove({nombre: nombre , dia: dia})
+        const agenda = await SchemaAgendas.deleteOne({nombre: nombre , dia: dia})
         res.status(200).json({msg: 'agenda eliminada con exito'});
     }catch(err){
       res.status(500).json({msg:'error en el servidor'})

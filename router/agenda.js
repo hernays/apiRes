@@ -14,6 +14,6 @@ routerAgenda.post('/save' ,[
 ], guardarAgenda)
 routerAgenda.get('' , getAgenda)
 routerAgenda.delete('/borrar' , borrarMes)
-routerAgenda.delete('/borrarHora', borrarHoras)
+routerAgenda.post('/borrarHora', borrarHoras)
 
 export default routerAgenda;
