@@ -25,6 +25,9 @@ export class Server {
         this.app.use('/api' , routerUsuario );
         this.app.use('/api/auth' , routerAuth );
         this.app.use('/api/agenda' , routerAgenda );
+        this.app.get('/*', ( req ,res ) => {
+             res.sendFile(__dirname + './public/index.html')
+        })
     }
 
     iniciar(){
