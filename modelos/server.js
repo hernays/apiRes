@@ -17,7 +17,7 @@ export class Server {
         this.middlewares();
         this.router();
         this.__filename = fileURLToPath(import.meta.url);
-        this.__dirname(this.__filename);
+        this.__dirname = dirname(this.__filename);
     }
 
     middlewares(){
