@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1662572198585,
+  "timestamp": 1662842121108,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.6cc69e8537569098.js",
+        "/main.c4064cc6e23d7ae7.js",
         "/manifest.webmanifest",
         "/polyfills.0a6b30248a5340cc.js",
         "/runtime.f9bb3dbe4dfa929f.js",
@@ -43,7 +43,24 @@
       "patterns": []
     }
   ],
-  "dataGroups": [],
+  "dataGroups": [
+    {
+      "name": "agenda-api",
+      "patterns": [
+        "https:\\/\\/dubenails\\.xyz\\/api\\/usuarios",
+        "https:\\/\\/dubenails\\.xyz\\/api\\/auth\\/authorization",
+        "https:\\/\\/dubenails\\.xyz\\/api\\/agenda"
+      ],
+      "strategy": "freshness",
+      "maxSize": 5,
+      "maxAge": 3000000,
+      "timeoutMs": 5000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
   "hashTable": {
     "/assets/icons/icon-128x128.png": "bd59366849feb3765bd637af4f8020f1d2b3fd6f",
     "/assets/icons/icon-144x144.png": "58d7e7ffc1138b06c318111c7328fbbdca6dbc65",
@@ -56,8 +73,8 @@
     "/assets/img/fonto.jpg": "7aa71282e8573c046fd9c661d5e52a4a25e992ac",
     "/assets/img/home.png": "c628d470a885d063aed84eae6c11712538b26f0c",
     "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/index.html": "6b7cc34e63505b9bab4a091008f156aae6417035",
-    "/main.6cc69e8537569098.js": "14d044bba48b9c73d4a7bcfd2d6d9248c1ea85fe",
+    "/index.html": "3dfe340bdd02ca06fc24aa232a27919375cae1a1",
+    "/main.c4064cc6e23d7ae7.js": "93cd6cc9d39358b0a1303cd9ac5551098d924cb1",
     "/manifest.webmanifest": "05c3adf54239dccb1d64120700cb75fe77f364cd",
     "/polyfills.0a6b30248a5340cc.js": "a3e9b4806a6ccd1bcd8c7f3e60e80d064f344ee4",
     "/runtime.f9bb3dbe4dfa929f.js": "bacef7f1e4917348a266e4bdf346ea279a426fd5",
