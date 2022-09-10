@@ -5,11 +5,11 @@ moment().locale('es');
 export const guardarAgenda = async(req , res) => {
 
     const mes = moment().month() + 1;
-    const { nombre , servicio , dia , hora , horaServicio} = req.body;
+    const { nombre , servicio , dia , hora , horaServicio , telefono} = req.body;
        const tramo = hora + horaServicio;
     try{
         const agenda = new SchemaAgendas({
-            nombre , servicio, dia, hora , mes , tramo
+            nombre , servicio, dia, hora , mes , tramo , telefono
         })
     
         agenda.save();
