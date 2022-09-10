@@ -26,6 +26,11 @@ const SchemaAgenda = Schema({
     tramo:{
         type:Number,
         requied:[true, 'el tramo es requerido']
+    },
+    telefono:{
+        type:String,
+        requied:false,
+        default:null
     }
 })
 
