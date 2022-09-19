@@ -9,7 +9,6 @@ const routerUsuario = express();
 
 routerUsuario.post('/usuarios' , [
     check('nombre','el nombre es obligatorio').not().isEmpty(),
-    check('apellido','el apellido es obligatorio').not().isEmpty(),
     check('password','el Minimo de caracter son 6').isLength({min : 6}),
     check('correo','el correo no es valido').isEmail(),
     check('direccion','las direccion es obligatoria').not().isEmpty(),
