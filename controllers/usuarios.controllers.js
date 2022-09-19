@@ -70,7 +70,6 @@ export const consultarUsuario = async( req , res ) => {
     try{
         const usuario = await SchemaUsuario.findById( { _id : id.replace(/["]+/g, '') }); 
         res.status(200).json({ 
-      
             id:usuario._id,
             nombre:usuario.nombre,
             apellido:usuario.apellido,
