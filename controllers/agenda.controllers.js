@@ -22,12 +22,15 @@ export const guardarAgenda = async(req , res) => {
 }
 
 export const getAgenda = async(req ,res) => {
+    console.log('aqui')
     try{
+        console.log('aqui try')
         const agenda = await SchemaAgendas.find();
         res.status(200).json({
             agenda
         })
     }catch(err){
+        console.log(' error')
         res.status(500).json({msg:'error en el servidor'})
     }
 
@@ -47,15 +50,11 @@ export const borrarMes = async( req , res) => {
 export const borrarHoras = async(req , res) => {
 
     const { nombre , dia } = req.body;
-
-    console.log(nombre , dia)
     try{
         const agenda = await SchemaAgendas.deleteOne({nombre: nombre , dia: dia})
         res.status(200).json({msg: 'agenda eliminada con exito'});
     }catch(err){
       res.status(500).json({msg:'error en el servidor'})
     }
-    
-
 
 }
