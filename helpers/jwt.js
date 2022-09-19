@@ -56,6 +56,6 @@ export const validarUsuarioConectado = (req , res , next) => {
         return res.status(400).json({msg:'Error de autenticación'});
     }
 
-    req.id = decode;
+    req.header.id = decode;
     next();
 }

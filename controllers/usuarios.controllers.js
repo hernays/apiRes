@@ -66,10 +66,17 @@ export const borrarUsuario = async( req , res ) => {
 }
 
 export const consultarUsuario = async( req , res ) => {
-    const { id } = req.params;
+    const { id } = req.header;
     try{
-        const usuario = await SchemaUsuario.findById( id ); 
-        res.status(200).json({ usuario })
+        const usuario = await SchemaUsuario.findById( { _id : id.replace(/["]+/g, '') }); 
+        res.status(200).json({ 
+      
+            id:usuario._id,
+            nombre:usuario.nombre,
+            apellido:usuario.apellido,
+            rol:usuario.rol
+        })
+
     }catch(err){
         console.log(err)
         res.status(500).json({msg: 'Error en la conexión, contacte a su administrador'})
