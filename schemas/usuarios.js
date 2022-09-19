@@ -12,7 +12,7 @@ const SchemaUsuarios = Schema( {
     },
     apellido: {
         type: String,
-        required: false ,
+        required: false,
     },
     password: {
         type: String,
