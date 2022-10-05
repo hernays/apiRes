@@ -5,12 +5,13 @@ import { SchemaUsuario } from "../schemas/usuarios.js";
 
 export const generarJWT = async( req , res , next ) => {
 
-    const { correo , password} = req.body;
-
+    const { nombre , password} = req.body;
+      
+    console.log(nombre , password)
     // validar si el correo existe en la DB
-    const usuario = await SchemaUsuario.find({correo});
+    const usuario = await SchemaUsuario.find({nombre});
     if(usuario.length <= 0)  
-    res.status(400).json({msg:'correo invalido'})
+    res.status(400).json({msg:'nombre invalido'})
     
     req.usuario = usuario;
     const passwordDB = usuario[0].password;

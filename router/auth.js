@@ -9,7 +9,7 @@ import { validarCampos } from "../helpers/validarCampos.js";
 const routerAuth = express();
 
 routerAuth.post('/login', [
-    check('correo','el correo es obligatorio').isEmail(),
+    check('nombre','el nombre es obligatorio').not().isEmpty(),
     check('password','el password es obligatorio').isLength(6),
     generarJWT,
     validarCampos

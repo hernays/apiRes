@@ -11,6 +11,7 @@ routerUsuario.post('/usuarios' , [
     check('nombre','el nombre es obligatorio').not().isEmpty(),
     check('correo','el correo no es valido').isEmail(),
     check('direccion','las direccion es obligatoria').not().isEmpty(),
+    check('password','la contraseña es requerida').not().isEmpty(),
     check('telefono','el telefono es obligatoria').not().isEmpty().isNumeric(),
     check('rol').custom( validarRol ),
     validarCampos,

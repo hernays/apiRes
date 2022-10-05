@@ -3,7 +3,7 @@ import { SchemaUsuario } from "../schemas/usuarios.js";
 
 export const usuariosGuardar = async ( req , res ) => {
 
-    const { nombre , password , correo , direccion , numero , apellido , rol = 'USER_ROLE' , telefono } = req.body;
+    const { nombre , password , correo , direccion , numero , apellido , rol = 'user' , telefono } = req.body;
 
     try {
          // guardar usuario
@@ -11,7 +11,7 @@ export const usuariosGuardar = async ( req , res ) => {
             nombre , password , correo , direccion , 
             numero , apellido , rol , telefono
         } );
-
+           
         usuarios.save();
         res.status(200).json({msg: 'Usuario Registrado con Exito'});
         
