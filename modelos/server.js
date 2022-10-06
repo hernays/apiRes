@@ -5,6 +5,8 @@ import  { conexionDB } from '../DB/connect.js';
 import  routerUsuario  from '../router/usuarios.js';
 import  routerAuth     from '../router/auth.js';
 import  routerAgenda    from '../router/agenda.js'
+import {v2 as cloudinary}  from 'cloudinary';
+import  fileupload  from 'express-fileupload';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -23,7 +25,11 @@ export class Server {
     middlewares(){
         this.app.use( cors() );
         this.app.use( express.json() );
-        this.app.use( express.text() )
+        this.app.use( express.text() );
+        this.app.use( fileupload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/'
+        }));
     }
 
     router(){
@@ -41,6 +47,16 @@ export class Server {
         this.app.listen(process.env.PORT || 1000, () => {
             console.log('Server Corriendo en el puerto ', process.env.PORT);
         });
-        this.conexionDb();
+        this.conexionDb(); 
+        this.cloudinary();
+    }
+
+    cloudinary(){
+        cloudinary.config({
+            cloud_name: 'mas58', 
+            api_key: '524719663542157', 
+            api_secret: 'ATvr0kFgSXSToBEboAm0TCmSDCI',
+            secure: true
+        })
     }
 }

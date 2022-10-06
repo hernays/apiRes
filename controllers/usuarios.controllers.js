@@ -1,5 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { SchemaUsuario } from "../schemas/usuarios.js";
+import {v2 as cloudinary}  from 'cloudinary';
 
 export const usuariosGuardar = async ( req , res ) => {
 
@@ -35,7 +36,8 @@ export const consultarUsuarios = async( req , res ) => {
 export const actualizarUsuario = async( req , res ) => {
 
     const { id } = req.params;
-    const { _id , password , google , rol , estado , ...rest } = req.body;
+    const { _id , password , google , rol , estado , ...rest
+     } = req.body;
     try{
         const usuario = await SchemaUsuario.findByIdAndUpdate( id , rest );
         res.status(200).json({
@@ -73,7 +75,8 @@ export const consultarUsuario = async( req , res ) => {
             id:usuario._id,
             nombre:usuario.nombre,
             apellido:usuario.apellido,
-            rol:usuario.rol
+            rol:usuario.rol,
+            image:usuario.image
         })
 
     }catch(err){
@@ -95,4 +98,31 @@ export const actualizarRol = async( req , res) => {
         res.status(500).json({msg: 'Error en la conexión, contacte a su administrador' });
     }
 
+}
+
+
+export const cargaImage = async( req , res ) => {
+
+    const { tempFilePath , name } = req.files.archivo;
+    const { id } = req.params;
+    console.log(id)
+    const extension = name.split('.')
+
+      if(extension[1] !== 'jpg' && extension[1] !== 'png' && extension[1] !== 'jpeg'
+      && extension[1] !== 'gif' && extension[1] !== 'heif' && extension[1] !== 'webp'
+      && extension[1] !== 'avif'){
+         res.status(400).json({
+            msg:'la extension no es valida'
+         })
+      }
+
+    const { secure_url }  = await cloudinary.uploader.upload(tempFilePath);
+    try{
+        const user = await SchemaUsuario.findByIdAndUpdate(id , {image : secure_url})
+       res.status(200).json(secure_url);
+    }catch(err){
+        res.status(500).json({
+            msg:'Error en la conexión, contacte a su administrador'
+        })
+    }
 }

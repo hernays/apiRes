@@ -1,6 +1,6 @@
 import express from 'express';
 import { check } from 'express-validator';
-import { consultarUsuarios, actualizarUsuario, usuariosGuardar , borrarUsuario , consultarUsuario, actualizarRol } from '../controllers/usuarios.controllers.js';
+import { consultarUsuarios, actualizarUsuario, usuariosGuardar , borrarUsuario , consultarUsuario, actualizarRol, cargaImage } from '../controllers/usuarios.controllers.js';
 import { validarUsuarioAdmin, validarUsuarioConectado } from '../helpers/jwt.js';
 import { validarCampos , validarEmailExiste, validarRol , validarId } from '../helpers/validarCampos.js';
 
@@ -40,6 +40,8 @@ routerUsuario.put('/usuario/:id', [
     validarCampos,
     validarEmailExiste
 ] ,actualizarUsuario);
+
+routerUsuario.put('/usuarioImg/:id', cargaImage);
 
 routerUsuario.delete('/usuario/:id' ,[
     validarUsuarioAdmin,

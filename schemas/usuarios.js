@@ -35,6 +35,11 @@ const SchemaUsuarios = Schema( {
         type : String,
         require: [true , 'el rol es requerido'],
     },
+    image:{
+     type: String,
+     require:false,
+     default:null
+    },
     google :{
         type : Boolean,
         default : false,
