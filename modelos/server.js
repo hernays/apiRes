@@ -51,7 +51,7 @@ export class Server {
         this.cloudinary();
     }
 
-    cloudinary(){
+ /*    cloudinary(){
         cloudinary.config('cloudinary://524719663542157:ATvr0kFgSXSToBEboAm0TCmSDCI@mas58')
-    }
+    } */
 }
