@@ -41,8 +41,8 @@ routerUsuario.put('/usuario/:id', [
     validarEmailExiste
 ] ,actualizarUsuario);
 
-routerUsuario.put('/usuarioImg/:id', cargaImage);
-
+/* routerUsuario.put('/usuarioImg/:id', cargaImage);
+ */
 routerUsuario.delete('/usuario/:id' ,[
     validarUsuarioAdmin,
     check('id', 'el id no es valido').isMongoId(),

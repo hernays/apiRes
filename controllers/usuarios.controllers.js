@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 import { SchemaUsuario } from "../schemas/usuarios.js";
-import {v2 as cloudinary}  from 'cloudinary';
+/* import {v2 as cloudinary}  from 'cloudinary'; */
 
 export const usuariosGuardar = async ( req , res ) => {
 

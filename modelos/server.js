@@ -5,7 +5,7 @@ import  { conexionDB } from '../DB/connect.js';
 import  routerUsuario  from '../router/usuarios.js';
 import  routerAuth     from '../router/auth.js';
 import  routerAgenda    from '../router/agenda.js'
-import {v2 as cloudinary}  from 'cloudinary';
+/* import {v2 as cloudinary}  from 'cloudinary'; */
 import  fileupload  from 'express-fileupload';
 
 import { fileURLToPath } from 'url';
