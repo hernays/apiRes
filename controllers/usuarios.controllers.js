@@ -101,7 +101,7 @@ export const actualizarRol = async( req , res) => {
 }
 
 
-export const cargaImage = async( req , res ) => {
+/* export const cargaImage = async( req , res ) => {
 
     const { tempFilePath , name } = req.files.archivo;
     const { id } = req.params;
@@ -125,4 +125,4 @@ export const cargaImage = async( req , res ) => {
             msg:'Error en la conexión, contacte a su administrador'
         })
     }
-}
+} */

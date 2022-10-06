@@ -33,7 +33,6 @@ export class Server {
     }
 
     router(){
-        console.log('1que paso')
         this.app.use( express.static('public'));
         this.app.use('/api' , routerUsuario );
         this.app.use('/api/auth' , routerAuth );
