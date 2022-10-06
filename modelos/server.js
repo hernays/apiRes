@@ -48,7 +48,7 @@ export class Server {
             console.log('Server Corriendo en el puerto ', process.env.PORT);
         });
         this.conexionDb(); 
-        this.cloudinary();
+        /* this.cloudinary(); */
     }
 
  /*    cloudinary(){
