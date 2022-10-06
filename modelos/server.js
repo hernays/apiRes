@@ -5,7 +5,6 @@ import  { conexionDB } from '../DB/connect.js';
 import  routerUsuario  from '../router/usuarios.js';
 import  routerAuth     from '../router/auth.js';
 import  routerAgenda    from '../router/agenda.js'
-/* import {v2 as cloudinary}  from 'cloudinary'; */
 import  fileupload  from 'express-fileupload';
 
 import { fileURLToPath } from 'url';
@@ -47,10 +46,5 @@ export class Server {
             console.log('Server Corriendo en el puerto ', process.env.PORT);
         });
         this.conexionDb(); 
-        /* this.cloudinary(); */
     }
-
- /*    cloudinary(){
-        cloudinary.config('cloudinary://524719663542157:ATvr0kFgSXSToBEboAm0TCmSDCI@mas58')
-    } */
 }

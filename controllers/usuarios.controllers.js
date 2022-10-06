@@ -1,6 +1,13 @@
 import { v4 as uuid } from "uuid";
 import { SchemaUsuario } from "../schemas/usuarios.js";
-/* import {v2 as cloudinary}  from 'cloudinary'; */
+ import {v2 as cloudinary}  from 'cloudinary'; 
+
+ cloudinary.config({ 
+    cloud_name: 'mas58', 
+    api_key: '524719663542157', 
+    api_secret: 'ATvr0kFgSXSToBEboAm0TCmSDCI',
+    secure: true
+  })
 
 export const usuariosGuardar = async ( req , res ) => {
 
@@ -101,7 +108,7 @@ export const actualizarRol = async( req , res) => {
 }
 
 
-/* export const cargaImage = async( req , res ) => {
+ export const cargaImage = async( req , res ) => {
 
     const { tempFilePath , name } = req.files.archivo;
     const { id } = req.params;
@@ -125,4 +132,4 @@ export const actualizarRol = async( req , res) => {
             msg:'Error en la conexión, contacte a su administrador'
         })
     }
-} */
+} 
