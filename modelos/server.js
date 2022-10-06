@@ -52,11 +52,6 @@ export class Server {
     }
 
     cloudinary(){
-        cloudinary.config({
-            cloud_name: 'mas58', 
-            api_key: '524719663542157', 
-            api_secret: 'ATvr0kFgSXSToBEboAm0TCmSDCI',
-            secure: true
-        })
+        cloudinary.config('cloudinary://524719663542157:ATvr0kFgSXSToBEboAm0TCmSDCI@mas58')
     }
 }
