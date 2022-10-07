@@ -23,19 +23,13 @@ export class Server {
 
     middlewares(){
         this.app.use( cors() );
-        this.app.use( express.json() );
+        this.app.use( express.json({limit:'50mb'}) );
+        app.use(express.urlencoded({limit: '50mb'}));
         this.app.use( express.text() );
         this.app.use( fileupload({
             useTempFiles : true,
             tempFileDir : '/tmp/'
         }));
-    }
-
-    router(){
-        this.app.use( express.static('public'));
-        this.app.use('/api' , routerUsuario );
-        this.app.use('/api/auth' , routerAuth );
-        this.app.use('/api/agenda' , routerAgenda );
         this.app.use((req, res, next) => {
             res.header('Access-Control-Allow-Origin', '*');
             res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -43,6 +37,13 @@ export class Server {
             res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
             next();
         });
+    }
+
+    router(){
+        this.app.use( express.static('public'));
+        this.app.use('/api' , routerUsuario );
+        this.app.use('/api/auth' , routerAuth );
+        this.app.use('/api/agenda' , routerAgenda );
         this.app.get('/*', ( req ,res ) => {
              res.sendFile(this.__dirname.replace('/modelos', '') + '/public/index.html')
         })
