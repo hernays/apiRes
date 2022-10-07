@@ -109,23 +109,28 @@ export const actualizarRol = async( req , res) => {
 
 
  export const cargaImage = async( req , res ) => {
-
-    const { tempFilePath , name } = req.files.archivo;
+    if(req.files === null){
+      return res.status(400).json({msg:'La imagen es requerida'})
+    }
+    const { tempFilePath } = req.files.archivo;
     const { id } = req.params;
-    console.log(id)
-    const extension = name.split('.')
-
-      if(extension[1] !== 'jpg' && extension[1] !== 'png' && extension[1] !== 'jpeg'
-      && extension[1] !== 'gif' && extension[1] !== 'heif' && extension[1] !== 'webp'
-      && extension[1] !== 'avif'){
-         res.status(400).json({
+         
+    const { mimetype } = req.files.archivo;
+      if(mimetype !== 'image/jpg' && mimetype !== 'image/png' && mimetype !== 'image/jpeg'
+      && mimetype !== 'image/gif' && mimetype !== 'image/HEIC' && mimetype !== 'image/webp'
+      && mimetype !== 'image/avif' && mimetype !== 'image/heic'){
+         return res.status(400).json({
             msg:'la extension no es valida'
          })
       }
-
-    const { secure_url }  = await cloudinary.uploader.upload(tempFilePath);
     try{
-        const user = await SchemaUsuario.findByIdAndUpdate(id , {image : secure_url})
+        const { secure_url }  = await cloudinary.uploader.upload(tempFilePath); 
+        const user = await SchemaUsuario.findByIdAndUpdate(id , {image : secure_url })
+        if(user.image){
+        const imgSplit = user.image.split('/');
+        const imgId = imgSplit[imgSplit.length - 1].split('.');
+         cloudinary.uploader.destroy(imgId[0]);
+        }
        res.status(200).json(secure_url);
     }catch(err){
         res.status(500).json({
