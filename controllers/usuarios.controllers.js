@@ -112,13 +112,15 @@ export const actualizarRol = async( req , res) => {
     if(req.files === null){
       return res.status(400).json({msg:'La imagen es requerida'})
     }
-    const { tempFilePath } = req.files.archivo;
+    const { tempFilePath , name } = req.files.archivo;
     const { id } = req.params;
          
     const { mimetype } = req.files.archivo;
+
+    console.log(mimetype , req.files.archivo)
       if(mimetype !== 'image/jpg' && mimetype !== 'image/png' && mimetype !== 'image/jpeg'
       && mimetype !== 'image/gif' && mimetype !== 'image/HEIC' && mimetype !== 'image/webp'
-      && mimetype !== 'image/avif' && mimetype !== 'image/heic'){
+      && mimetype !== 'image/avif' && mimetype !== 'image/heic' && mimetype !== 'application/octet-stream'){
          return res.status(400).json({
             msg:'la extension no es valida'
          })
