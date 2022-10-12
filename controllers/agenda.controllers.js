@@ -46,8 +46,7 @@ export const getAgendaDay = async(req ,res) => {
     const { dia , mes } = req.params;
     try{
         const agenda = await SchemaAgendas.find({dia : dia , mes : mes});
-        
-        console.log(agenda)
+   
         if(agenda.length === 0) return res.status(400).json({
             msg:'No se encontraron registros.'
         })
