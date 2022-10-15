@@ -5,6 +5,7 @@ import  { conexionDB } from '../DB/connect.js';
 import  routerUsuario  from '../router/usuarios.js';
 import  routerAuth     from '../router/auth.js';
 import  routerAgenda    from '../router/agenda.js'
+import routerArticulos from '../router/articulos.js';
 import  fileupload  from 'express-fileupload';
 
 import { fileURLToPath } from 'url';
@@ -44,6 +45,7 @@ export class Server {
         this.app.use('/api' , routerUsuario );
         this.app.use('/api/auth' , routerAuth );
         this.app.use('/api/agenda' , routerAgenda );
+        this.app.use('/api/articulos' , routerArticulos);
         this.app.get('/*', ( req ,res ) => {
              res.sendFile(this.__dirname.replace('/modelos', '') + '/public/index.html')
         })

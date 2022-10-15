@@ -3,8 +3,10 @@ export const authController = async(req , res) => {
 
     const { correo , password } = req.body;
 
+    console.log(req.usuario[0].rol)
     res.status(200).json({
-        token: req.token
+        token: req.token,
+        rol:req.usuario[0].rol
     })
 
 }

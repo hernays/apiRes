@@ -21,6 +21,7 @@ export const generarJWT = async( req , res , next ) => {
 
     const uid = usuario[0]._id;
     req.token = jwt.sign(JSON.stringify(uid) , 'hernaysgonzalez');
+    req.usuario = usuario;
     next();
 }
 
