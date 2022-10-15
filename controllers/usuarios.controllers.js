@@ -144,7 +144,7 @@ export const actualizarRol = async( req , res) => {
         if(user.image){
         const imgSplit = user.image.split('/');
         const imgId = imgSplit[imgSplit.length - 1].split('.');
-         cloudinary.uploader.destroy(imgId[0]);
+         cloudinary.uploader.destroy("usuariosPerfil/"+imgId[0]);
         }
        res.status(200).json(secure_url);
     }catch(err){

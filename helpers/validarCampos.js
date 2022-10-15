@@ -21,10 +21,11 @@ export const validarCampos = async(req , res , next) => {
 // validar si el correo existe en la base de datos
 
 export const validarEmailExiste = async( req , res , next ) => {
-    const { correo } = req.body;
-    const validarCorreo = await SchemaUsuario.findOne( { correo }); 
-
-    if(validarCorreo) res.status(400).json({ msg : 'el correo ya existe'});
+    const { correo , nombre } = req.body;
+    const validarCorreo = await SchemaUsuario.findOne( { correo });
+    const validarNombre = await SchemaUsuario.findOne( { nombre });  
+    if(validarCorreo) return res.status(400).json({ msg : 'el correo ya existe'});
+    if(validarNombre) return res.status(400).json({ msg : 'el nombre ya existe'});
     next();
 }
 

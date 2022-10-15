@@ -28,7 +28,7 @@ export const guardarArticulos = async(req , res) => {
         use_filename: true,
         transformation:{
             width:600,
-            height:500
+            height:280
         }
     })
     console.log("img",secure_url)

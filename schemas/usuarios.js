@@ -9,6 +9,7 @@ const SchemaUsuarios = Schema( {
     nombre: {
         type: String,
         required: [ true , 'el nombre es obligatorio'],
+        unique: true
     },
     apellido: {
         type: String,
