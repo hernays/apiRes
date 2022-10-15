@@ -1,12 +1,13 @@
 import  express  from "express";
 import { check } from "express-validator";
-import { guardarArticulos, listarArticulos } from "../controllers/articulos.controllers.js";
+import { guardarArticulos, listarArticulos ,borrarArticulos} from "../controllers/articulos.controllers.js";
 import { validarCampos, validarhora } from "../helpers/validarCampos.js";
 
 const routerArticulos = express();
 
 routerArticulos.post('', guardarArticulos )
 routerArticulos.get('', listarArticulos )
+routerArticulos.delete('/:id', borrarArticulos )
 
 /* routerAgenda.post('/save' ,[
     check('nombre', 'el nombre es obligatorio').not().isEmpty(),

@@ -1,6 +1,7 @@
 
 import  jwt, { decode } from "jsonwebtoken";
 import { SchemaUsuario } from "../schemas/usuarios.js";
+import pkg from 'bcryptjs';
 
 
 export const generarJWT = async( req , res , next ) => {
@@ -8,15 +9,17 @@ export const generarJWT = async( req , res , next ) => {
     const { nombre , password} = req.body;
       
     console.log(nombre , password)
+
     // validar si el correo existe en la DB
     const usuario = await SchemaUsuario.find({nombre});
     if(usuario.length <= 0)  
     res.status(400).json({msg:'nombre invalido'})
     
     req.usuario = usuario;
-    const passwordDB = usuario[0].password;
+    const passworCompare = pkg.compareSync(password, usuario[0].password); // true
+
     // validar si el password coincide con la DB
-    if(password !== passwordDB) 
+    if(!passworCompare) 
     res.status(400).json({ msg: 'la contraseña es invalida'});
 
     const uid = usuario[0]._id;

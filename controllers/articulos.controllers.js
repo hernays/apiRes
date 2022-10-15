@@ -22,7 +22,15 @@ export const guardarArticulos = async(req , res) => {
        })
     }
 
-    const { secure_url }  = await cloudinary.uploader.upload(tempFilePath); 
+    const { secure_url }  = await cloudinary.uploader.upload(tempFilePath ,{
+        folder: 'articulos',
+        format: 'jpg',
+        use_filename: true,
+        transformation:{
+            width:600,
+            height:500
+        }
+    })
     console.log("img",secure_url)
     try{
         const articulo = await SchemaArticulo.create({usuario , descripcion , fecha , nombre , img : secure_url});
@@ -61,21 +69,25 @@ export const listarArticulos = async(req, res) => {
 }
 
 
-const cargaImg = async() => {
-    if(req.files === null){
-        return res.status(400).json({msg:'La imagen es requerida'})
-      }
+export const borrarArticulos = async(req , res) => {
 
-    const { tempFilePath , name } = req.files.archivo;
-    const { mimetype } = req.files.archivo;
-    if(mimetype !== 'image/jpg' && mimetype !== 'image/png' && mimetype !== 'image/jpeg'
-    && mimetype !== 'image/gif' && mimetype !== 'image/HEIC' && mimetype !== 'image/webp'
-    && mimetype !== 'image/avif' && mimetype !== 'image/heic' && mimetype !== 'application/octet-stream'){
-       return res.status(400).json({
-          msg:'la extension no es valida'
-       })
+    const { id } = req.params;
+
+    try{
+        const articulo = await SchemaArticulo.findByIdAndDelete(id);
+          if(articulo.img){
+            const imgSplit = articulo.img.split('/');
+            const imgId = imgSplit[imgSplit.length - 1].split('.');
+             cloudinary.uploader.destroy('articulos/'+imgId[0])
+            } 
+        res.status(200).json({
+            articulo
+        })
+
+    }catch(error){
+      res.status(500).json({
+        msg:'error 500'
+      })
     }
 
-    const { secure_url }  = await cloudinary.uploader.upload(tempFilePath); 
-    return secure_url;
 }

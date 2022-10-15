@@ -1,6 +1,7 @@
 import { v4 as uuid } from "uuid";
 import { SchemaUsuario } from "../schemas/usuarios.js";
  import {v2 as cloudinary}  from 'cloudinary'; 
+ import   pkg  from 'bcryptjs'  ; 
 
  cloudinary.config({ 
     cloud_name: 'mas58', 
@@ -13,10 +14,14 @@ export const usuariosGuardar = async ( req , res ) => {
 
     const { nombre , password , correo , direccion , numero , apellido , rol = 'user' , telefono } = req.body;
 
+    const  sal  = pkg.genSaltSync ( 10 ) ; 
+    const  hash  = pkg.hashSync ( password ,  sal ) ; 
+    const passwordEncrypt = hash;
+
     try {
          // guardar usuario
          const usuarios = new SchemaUsuario( {
-            nombre , password , correo , direccion , 
+            nombre , password:passwordEncrypt , correo , direccion , 
             numero , apellido , rol , telefono
         } );
            
@@ -126,7 +131,15 @@ export const actualizarRol = async( req , res) => {
          })
       }
     try{
-        const { secure_url }  = await cloudinary.uploader.upload(tempFilePath); 
+        const { secure_url }  = await cloudinary.uploader.upload(tempFilePath, {
+        folder: 'usuariosPerfil',
+        format: 'jpg',
+        use_filename: true,
+        transformation:{
+            width:80,
+            height:70
+        }
+    })
         const user = await SchemaUsuario.findByIdAndUpdate(id , {image : secure_url })
         if(user.image){
         const imgSplit = user.image.split('/');
@@ -140,3 +153,4 @@ export const actualizarRol = async( req , res) => {
         })
     }
 } 
+
