@@ -14,6 +14,7 @@ export const usuariosGuardar = async ( req , res ) => {
 
     const { nombre , password , correo , direccion , numero , apellido , rol = 'user' , telefono } = req.body;
 
+    console.log(nombre)
     const  sal  = pkg.genSaltSync ( 10 ) ; 
     const  hash  = pkg.hashSync ( password ,  sal ) ; 
     const passwordEncrypt = hash;

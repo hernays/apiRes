@@ -24,8 +24,8 @@ export const validarEmailExiste = async( req , res , next ) => {
     const { correo , nombre } = req.body;
     const validarCorreo = await SchemaUsuario.findOne( { correo });
     const validarNombre = await SchemaUsuario.findOne( { nombre });  
-    if(validarCorreo) return res.status(400).json({ msg : 'el correo ya existe'});
-    if(validarNombre) return res.status(400).json({ msg : 'el nombre ya existe'});
+    if(validarCorreo) return res.status(400).json({ msg : 'El correo ya se encuentra registrado'});
+    if(validarNombre) return res.status(400).json({ msg : 'El alias ya existe por favor intente con otro'});
     next();
 }
 

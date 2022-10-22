@@ -8,8 +8,8 @@ const { Schema , model } = mongoose;
 const SchemaUsuarios = Schema( {
     nombre: {
         type: String,
-        required: [ true , 'el nombre es obligatorio'],
-        unique: true
+        required: [ true , 'El nombre es obligatorio'],
+        unique: true,
     },
     apellido: {
         type: String,
@@ -17,24 +17,24 @@ const SchemaUsuarios = Schema( {
     },
     password: {
         type: String,
-        required: [ true , 'la contraseña es obligatorio'],
+        required: [ true , 'La contraseña es obligatorio'],
     },
     correo: {
         type: String,
-        required :[ true , 'el correo es obligatorio'],
+        required :[ true , 'El correo es obligatorio'],
         unique: true,
     },
     direccion: {
         type: String,
-        required: [ true , 'la dirección es obligatoria'],
+        required: [ true , 'La dirección es obligatoria'],
     },
     telefono: {
         type: Number,
-        required: [ true , 'el telefono es obligatorio'],
+        required: [ true , 'El telefono es obligatorio'],
     },
     rol: {
         type : String,
-        require: [true , 'el rol es requerido'],
+        require: [true , 'El rol es requerido'],
     },
     image:{
      type: String,

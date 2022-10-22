@@ -8,7 +8,7 @@ import { validarCampos , validarEmailExiste, validarRol , validarId } from '../h
 const routerUsuario = express();
 
 routerUsuario.post('/usuarios' , [
-    check('nombre','el nombre es obligatorio').not().isEmpty(),
+    check('nombre','el alias es obligatorio').not().isEmpty(),
     check('correo','el correo no es valido').isEmail(),
     check('direccion','las direccion es obligatoria').not().isEmpty(),
     check('password','la contraseña es requerida').not().isEmpty(),
