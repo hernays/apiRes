@@ -50,7 +50,7 @@ export class Server {
         this.app.use('/api/agenda', routerAgenda);
         this.app.use('/api/articulos', routerArticulos);
 
-        this.app.post('/api//test', (req, res) => {
+        this.app.post('/api/test', (req, res) => {
 
             const { endpoint } = req.body;
             const { auth , p256dh }  = req.body.keys;
