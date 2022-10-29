@@ -1,6 +1,8 @@
 import moment from "moment";
 import {SchemaArticulo} from '../schemas/articulos.js';
 import {v2 as cloudinary}  from 'cloudinary'; 
+import  axios  from 'axios';
+import webpush from 'web-push';
 moment().locale('es');
 
 export const guardarArticulos = async(req , res) => {
@@ -39,9 +41,18 @@ export const guardarArticulos = async(req , res) => {
             const imgId = imgSplit[imgSplit.length - 1].split('.');
              cloudinary.uploader.destroy(imgId[0]);
             } */
+
         res.status(200).json(
             articulo
         )
+
+/*         axios.get('https://dubenails.xyz/articulo',{
+            nuevo :'articulo'
+          }).then((data) => console.log('aqui llego ok', data))
+          .catch((error) => console.log('erroreee', error));
+
+           */
+
     }catch(error){
  console.log('error', error)
     }
