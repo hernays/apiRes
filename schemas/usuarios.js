@@ -48,6 +48,20 @@ const SchemaUsuarios = Schema( {
     estado : {
         type: Boolean,
         default : true
+    },
+    notify : {
+        p256dh :{
+            type:String,
+            required : true
+          },
+          endpoint:{
+            type: String,
+            required : true
+          },
+          auth:{
+            type: String,
+            required : true
+          },
     }
 });
 

@@ -14,6 +14,7 @@ import { dirname } from 'path';
 // test
 
 import webpush from 'web-push';
+import routerNotificacion from '../router/notificacion.js';
 
 export class Server {
     constructor() {
@@ -49,28 +50,36 @@ export class Server {
         this.app.use('/api/auth', routerAuth);
         this.app.use('/api/agenda', routerAgenda);
         this.app.use('/api/articulos', routerArticulos);
+        this.app.use('/api/notificacion', routerNotificacion);
 
         this.app.post('/api/test', (req, res) => {
 
             const { endpoint } = req.body;
             const { auth , p256dh }  = req.body.keys;
-           console.log({endpoint} , {auth} , {p256dh} )
 
             const vapidKeys = {
             publicKey:'BLbYE-LHO-H7zD53WcZ_KPYaLh6G70VrMiOngCSTp3P8boggr7T-NxNnIoh7RMpcRq9fWXHCI3MeyV9ACqezm_k',
             privateKey:'7Y6Td9C6xHFlhK3zeRb5hLK-3qya2PFhxm6Cs9gnyvc'
            } 
 
-           /*  webpush.setGCMAPIKey(vapidKeys.privateKey); */
-            webpush.setVapidDetails(
+
+        webpush.setVapidDetails(
                 'mailto:hernays12@gmail.com',
                 vapidKeys.publicKey,
                 vapidKeys.privateKey
             );
+            
+            webpush.getVapidHeaders(
+              'https://dubenails.xyz',
+              'mailto:hernays12@gmail.com',
+              vapidKeys.publicKey,
+              vapidKeys.privateKey,
+              'aes128gcm'
+            )
 
-            console.log('url::',endpoint)
             const pushSubscription = {
-                endpoint : "https://updates.push.services.mozilla.com/wpush/v2/gAAAAABjXUTUOw5jXcmQUzqRAnRjv4Dhx6ejUNHdlc7CTGhQ7SfnJjlzasgaOSZEYFhqrVjCqeQ_9VE2FNOhg-7bZpUjxKg-6LpfuSIfswJu3JhGl45Drt8kYOW5asBdgRqo9ea6xtxZNpfkICxC8kWjSIGfwboLwYiMrpMM1P3ILavF_HtUVYY",
+                endpoint ,
+                expirationTime:null,
                 keys: {
                     auth ,
                     p256dh 
@@ -91,7 +100,7 @@ export class Server {
                         "actions":[{
                             "action":"explore",
                             "title":"hernays"
-                        }]
+                        }],
 
                      }
             }
@@ -100,9 +109,9 @@ export class Server {
             .catch(error => {console.log('error', error)})
             .then(exito => {
                 console.log('extisosss' , exito)
+                return res.status(200).json({ msg: 'notificado con exito' })
             })
 
-            res.status(200).json({ msg: 'ok' })
         });
         this.app.get('/*', (req, res) => {
             res.sendFile(this.__dirname.replace('/modelos', '') + '/public/index.html')

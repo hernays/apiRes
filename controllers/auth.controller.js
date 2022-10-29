@@ -18,6 +18,7 @@ export const authUsuarios = async(req , res ) => {
 
       const user = await SchemaUsuario.findById({ _id : id.replace(/["]+/g, '') });
     const data = {
+        id : user._id,
         nombre : user.nombre,
         rol: user.rol,
         telefono:user.telefono
