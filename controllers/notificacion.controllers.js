@@ -8,16 +8,16 @@ export const saveNotify = async (req, res) => {
     const { endpoint } = req.body;
     const { auth, p256dh } = req.body.keys;
     if(id){
-         const usuario = await SchemaUsuario.findById(id)
-
-        if(Object.keys(usuario.notify).length === 0){
+/*          const usuario = await SchemaUsuario.findById(id)
+ */
+     /*    if(Object.keys(usuario.notify).length === 0){
             console.log(usuario.notify)
               return res.status(200).json({
                 msg:'notify: existente'
               })
          }
 
-
+ */
 
       SchemaUsuario.findByIdAndUpdate(id, {notify:{endpoint , auth ,  p256dh}} )
        .then((data) => {
