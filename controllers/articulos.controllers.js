@@ -108,6 +108,7 @@ export const borrarArticulos = async(req , res) => {
 const notify = async() => {
   
     const usuariosAdmin = await SchemaUsuario.find({rol:'user'});
+    console.log(usuariosAdmin)
         for( const admin of usuariosAdmin){
             if(admin.notify){
                 const { endpoint , auth , p256dh } = admin.notify; 

@@ -9,16 +9,15 @@ export const guardarAgenda = async(req , res) => {
     const { nombre , servicio , dia , hora , horaServicio , telefono , mes , id} = req.body;
        const tramo = hora + horaServicio;
 
-
-        notify();
    
         try{
             const agenda = new SchemaAgendas({
                 nombre , servicio, dia, hora , mes , tramo , telefono
             })
-            
+
             agenda.save();
-            res.status(200).json({
+            notify(nombre , mes , dia , hora, servicio);
+            return res.status(200).json({
                 msg: 'agenda registrada con exito!!!'
             })
         }catch(err){
@@ -90,7 +89,7 @@ export const borrarHoras = async(req , res) => {
 
 }
 
-const notify = async() => {
+const notify = async(mes , dia , hora, servicio) => {
   
     const usuariosAdmin = await SchemaUsuario.find({rol:'admin'});
         for( const admin of usuariosAdmin){
@@ -127,7 +126,10 @@ const notify = async() => {
                  const payload = {
                     "notification": {
                         "title": "DubeNails",
-                        "body": "Nueva Hora Agendada",
+                        "body": `Nueva Hora Agendada 
+                        <strong>Nombre:${nombre}</strong> 
+                        <br />
+                        mes:${mes+1} - Dia:${dia} - Hora:${hora} - servicio:${servicio}`,
                         "vibrate": [100, 50, 100],
                         "image": "https://res.cloudinary.com/mas58/image/upload/v1665799264/a3ubvxjjoxr934mc1rtn.jpg",
                         "data": {
