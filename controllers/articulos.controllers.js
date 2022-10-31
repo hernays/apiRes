@@ -1,5 +1,6 @@
 import moment from "moment";
-import {SchemaArticulo} from '../schemas/articulos.js';
+import { SchemaArticulo } from '../schemas/articulos.js';
+import { SchemaUsuario } from "../schemas/usuarios.js";
 import {v2 as cloudinary}  from 'cloudinary'; 
 import  axios  from 'axios';
 import webpush from 'web-push';
