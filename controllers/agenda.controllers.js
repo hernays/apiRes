@@ -126,7 +126,7 @@ const notify = async(nombre ,mes , dia , hora, servicio) => {
                  const payload = {
                     "notification": {
                         "title": "Nueva Hora Agendada",
-                        "body": `Nombre:${nombre} mes:${mes+1} - Dia:${dia} - Hora:${hora} - servicio:${servicio}`,
+                        "body": `${nombre} agendo el ${dia} del ${mes+1} a las ${hora}  Servicio - ${servicio}`,
                         "vibrate": [100, 50, 100],
                         "image": "https://res.cloudinary.com/mas58/image/upload/v1665799264/a3ubvxjjoxr934mc1rtn.jpg",
                         "data": {
