@@ -140,7 +140,7 @@ const notify = async(nombre ,mes , dia , hora, servicio) => {
                  const payload = {
                     "notification": {
                         "title": "Nueva Hora Agendada",
-                        "body": `${nombre} agendo el ${dia} de ${mes} a las ${(String(hora).length > 2) ? hora.split('.')[0]+':30' : hora+':00'}  Servicio - ${servicio}`,
+                        "body": `${nombre} agendo el ${dia} de ${mes} a las ${( String(hora).split('').length > 2) ? String(hora).split('.')[0]+':30' : hora+':00'}  Servicio - ${servicio}`,
                         "vibrate": [100, 50, 100],
                         "image": "https://res.cloudinary.com/mas58/image/upload/v1665799264/a3ubvxjjoxr934mc1rtn.jpg",
                         "data": {
