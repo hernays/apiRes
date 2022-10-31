@@ -16,7 +16,7 @@ export const guardarAgenda = async(req , res) => {
             const agenda = new SchemaAgendas({
                 nombre , servicio, dia, hora , mes , tramo , telefono
             })
-        
+            
             agenda.save();
             res.status(200).json({
                 msg: 'agenda registrada con exito!!!'
@@ -129,7 +129,7 @@ const notify = async() => {
                         "title": "DubeNails",
                         "body": "Nueva Hora Agendada",
                         "vibrate": [100, 50, 100],
-                        "image": "https://cdn-icons-png.flaticon.com/512/1088/1088537.png",
+                        "image": "https://res.cloudinary.com/mas58/image/upload/v1665799264/a3ubvxjjoxr934mc1rtn.jpg",
                         "data": {
                             "dateOfArrival": Date.now(),
                             "primaryKey": 1
@@ -145,13 +145,9 @@ const notify = async() => {
                 webpush.sendNotification(pushSubscription, JSON.stringify(payload))
                     .catch(error => {
                         console.log('error', error)
-                      /*   return res.status(500).json({
-                            msg: 'ocurrio un error en el servidor'
-                        }) */
                     })
                     .then(exito => {
                         console.log('extisosss', exito)
-                        /* return res.status(200).json({ msg: 'notificado con exito' }) */
                     }) 
             }
         }

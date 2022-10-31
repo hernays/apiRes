@@ -10,6 +10,7 @@ export const generarJWT = async( req , res , next ) => {
       
     console.log(nombre , password)
 
+    nombre.trim();
     // validar si el correo existe en la DB
     const usuario = await SchemaUsuario.find({nombre});
     if(usuario.length <= 0)  

@@ -41,7 +41,7 @@ export const guardarArticulos = async(req , res) => {
             const imgId = imgSplit[imgSplit.length - 1].split('.');
              cloudinary.uploader.destroy(imgId[0]);
             } */
-
+           
         res.status(200).json(
             articulo
         )
@@ -68,7 +68,7 @@ export const listarArticulos = async(req, res) => {
                 "select":'nombre apellido rol'
             }
         )
-
+        notify();
         res.status(200).json(
             articulos
         )
@@ -101,4 +101,69 @@ export const borrarArticulos = async(req , res) => {
       })
     }
 
+}
+
+
+
+const notify = async() => {
+  
+    const usuariosAdmin = await SchemaUsuario.find({rol:'user'});
+        for( const admin of usuariosAdmin){
+            if(admin.notify){
+                const { endpoint , auth , p256dh } = admin.notify; 
+                const vapidKeys = {
+                    publicKey: 'BBG9Ywk7mvin-aXmEpLorIVjGeo_8cahwFMYXqFD1VKsCldi_dAYXssJ5moV2pe3vcdqzCtXWS4ru8jn9UlGlrs',
+                    privateKey: '2H-ud4yYXHowo764X4T7q82PsVZ0soGDEDGtAmcDB2w'
+                } 
+            
+                 webpush.setVapidDetails(
+                    'mailto:hernays12@gmail.com',
+                    vapidKeys.publicKey,
+                    vapidKeys.privateKey
+                );
+             
+                 webpush.getVapidHeaders(
+                    'https://dubenails.xyz',
+                    'mailto:hernays12@gmail.com',
+                    vapidKeys.publicKey,
+                    vapidKeys.privateKey,
+                    'aes128gcm'
+                ) 
+            
+                 const pushSubscription = {
+                    endpoint,
+                    expirationTime: null,
+                    keys: {
+                        auth,
+                        p256dh
+                    }
+                } 
+            
+                 const payload = {
+                    "notification": {
+                        "title": "DubeNails",
+                        "body": "Nuevo contenido disponible",
+                        "vibrate": [100, 50, 100],
+                        "image": "https://res.cloudinary.com/mas58/image/upload/v1665799264/a3ubvxjjoxr934mc1rtn.jpg",
+                        "data": {
+                            "dateOfArrival": Date.now(),
+                            "primaryKey": 1
+                        },
+                        "actions": [{
+                            "action": "explore",
+                            "title": "DubeNails"
+                        }],
+            
+                    }
+                } 
+            
+                webpush.sendNotification(pushSubscription, JSON.stringify(payload))
+                    .catch(error => {
+                        console.log('error', error)
+                    })
+                    .then(exito => {
+                        console.log('extisosss', exito)
+                    }) 
+            }
+        }
 }
