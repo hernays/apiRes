@@ -8,8 +8,6 @@ export const saveNotify = async (req, res) => {
     const { id } = req.params;
     const { endpoint } = req.body;
     const { auth, p256dh } = req.body.keys;
-
-/*     console.log('¿body', req.body , 'id' , id) */{}
     if(id){
          const usuario = await SchemaUsuario.findById(id)
 
