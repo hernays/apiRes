@@ -89,7 +89,7 @@ export const borrarHoras = async(req , res) => {
 
 }
 
-const notify = async(mes , dia , hora, servicio) => {
+const notify = async(nombre ,mes , dia , hora, servicio) => {
   
     const usuariosAdmin = await SchemaUsuario.find({rol:'admin'});
         for( const admin of usuariosAdmin){
