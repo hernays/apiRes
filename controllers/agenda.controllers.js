@@ -123,10 +123,24 @@ const notify = async(nombre ,mes , dia , hora, servicio) => {
                     }
                 } 
             
+                switch(mes){
+                      case 0 : mes = 'Enero'; break;
+                      case 1 : mes = 'Febrero'; break;
+                      case 2 : mes = 'Marzo'; break;
+                      case 3 : mes = 'Abril'; break;
+                      case 4 : mes = 'Mayo'; break;
+                      case 5 : mes = 'Junio'; break;
+                      case 6 : mes = 'Julio'; break;
+                      case 7 : mes = 'Agosto'; break;
+                      case 8 : mes = 'Septiembre'; break;
+                      case 9 : mes = 'Octubre'; break;
+                      case 10 : mes = 'Noviembre'; break;
+                      case 11 : mes = 'Diciembre'; break;
+                }
                  const payload = {
                     "notification": {
                         "title": "Nueva Hora Agendada",
-                        "body": `${nombre} agendo el ${dia} del ${mes+1} a las ${hora}  Servicio - ${servicio}`,
+                        "body": `${nombre} agendo el ${dia} de ${mes} a las ${(hora.length > 2) ? hora.split('.')[0]+':30' : hora+':00'}  Servicio - ${servicio}`,
                         "vibrate": [100, 50, 100],
                         "image": "https://res.cloudinary.com/mas58/image/upload/v1665799264/a3ubvxjjoxr934mc1rtn.jpg",
                         "data": {
