@@ -42,8 +42,8 @@ export const guardarArticulos = async(req , res) => {
             const imgId = imgSplit[imgSplit.length - 1].split('.');
              cloudinary.uploader.destroy(imgId[0]);
             } */
-           
-        res.status(200).json(
+            notify();
+       return res.status(200).json(
             articulo
         )
 
@@ -69,7 +69,6 @@ export const listarArticulos = async(req, res) => {
                 "select":'nombre apellido rol'
             }
         )
-        notify();
         res.status(200).json(
             articulos
         )
