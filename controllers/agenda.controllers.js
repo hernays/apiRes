@@ -125,11 +125,8 @@ const notify = async(nombre ,mes , dia , hora, servicio) => {
             
                  const payload = {
                     "notification": {
-                        "title": "DubeNails",
-                        "body": `Nueva Hora Agendada 
-                        <strong>Nombre:${nombre}</strong> 
-                        <br />
-                        mes:${mes+1} - Dia:${dia} - Hora:${hora} - servicio:${servicio}`,
+                        "title": "Nueva Hora Agendada",
+                        "body": `Nombre:${nombre} mes:${mes+1} - Dia:${dia} - Hora:${hora} - servicio:${servicio}`,
                         "vibrate": [100, 50, 100],
                         "image": "https://res.cloudinary.com/mas58/image/upload/v1665799264/a3ubvxjjoxr934mc1rtn.jpg",
                         "data": {
