@@ -9,7 +9,7 @@ export const saveNotify = async (req, res) => {
     const { endpoint } = req.body;
     const { auth, p256dh } = req.body.keys;
 
-/*     console.log('¿body', req.body , 'id' , id) */
+/*     console.log('¿body', req.body , 'id' , id) */{}
     if(id){
          const usuario = await SchemaUsuario.findById(id)
 
@@ -20,8 +20,11 @@ export const saveNotify = async (req, res) => {
               })
          }
 
+
+
       SchemaUsuario.findByIdAndUpdate(id, {notify:{endpoint , auth ,  p256dh}} )
        .then((data) => {
+        console.log('update::', data)
         res.status(200).json({
             msg: 'registrado enpoint con exito'
         })

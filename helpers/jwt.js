@@ -20,7 +20,7 @@ export const generarJWT = async( req , res , next ) => {
 
     // validar si el password coincide con la DB
     if(!passworCompare) 
-    res.status(400).json({ msg: 'la contraseña es invalida'});
+    return res.status(400).json({ msg: 'la contraseña es invalida'});
 
     const uid = usuario[0]._id;
     req.token = jwt.sign(JSON.stringify(uid) , 'hernaysgonzalez');
