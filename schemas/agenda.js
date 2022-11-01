@@ -31,6 +31,16 @@ const SchemaAgenda = Schema({
         type:String,
         requied:false,
         default:null
+    },
+    valor:{
+        type:Number,
+        requied:false,
+        default:null
+    },
+    diaHabilitado:{
+        type:Boolean,
+        requied:false,
+        default:true
     }
 })
 

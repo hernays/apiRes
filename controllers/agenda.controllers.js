@@ -8,11 +8,21 @@ export const guardarAgenda = async(req , res) => {
 
     const { nombre , servicio , dia , hora , horaServicio , telefono , mes , id} = req.body;
        const tramo = hora + horaServicio;
+       let valor = 0;
 
+       switch(servicio){
+        case 'Acrilicas' : valor = 18; break;
+        case 'Polygel' : valor = 18; break;
+        case 'Relleno acrilico/polygel' : valor = 15; break;
+        case 'kapping (revestimiento)' : valor = 15; break;
+        case 'Esmaltado Permanente' : valor = 10; break;
+        case 'Manicura (limpieza)' : valor = 10; break;
+        case 'Solo Retiro' : valor = 3; break;
+       }
    
         try{
             const agenda = new SchemaAgendas({
-                nombre , servicio, dia, hora , mes , tramo , telefono
+                nombre , servicio, dia, hora , mes , tramo , telefono , valor
             })
 
             agenda.save();
@@ -61,9 +71,22 @@ export const getAgendaDay = async(req ,res) => {
         })
     }catch(err){
         console.log(' error')
-        res.status(500).json({msg:'error en el servidor'})
+        return res.status(500).json({msg:'error en el servidor'})
     }
 
+}
+
+export const habilitarDia = async(req , res) => {
+
+    const { dia , mes , habilitar} = req.params;
+    try{
+        const agenda = await SchemaAgendas.findOneAndUpdate( {dia : dia , mes : mes} , { diaHabilitado : habilitar });
+        return res.status(200).json(
+            {habilitar}
+        );
+    }catch(error){
+        return res.status(500).json({msg:'error en el servidor'})
+    }
 }
 
 export const borrarMes = async( req , res) => {
