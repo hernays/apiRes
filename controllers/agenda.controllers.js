@@ -19,8 +19,11 @@ export const guardarAgenda = async(req , res) => {
         case 'Manicura (limpieza)' : valor = 10; break;
         case 'Solo Retiro' : valor = 3; break;
        }
-   
+
         try{
+
+             await SchemaAgendas.remove({mes : mes-2})
+             
             const agenda = new SchemaAgendas({
                 nombre , servicio, dia, hora , mes , tramo , telefono , valor
             })
@@ -108,6 +111,21 @@ export const borrarHoras = async(req , res) => {
         res.status(200).json({msg: 'agenda eliminada con exito'});
     }catch(err){
       res.status(500).json({msg:'error en el servidor'})
+    }
+
+}
+
+
+export const totalMes = async(req , res) => {
+         
+    const { mes } = req.params;
+
+    try{
+        const agendas = await SchemaAgendas.find({mes:mes}).select({'valor' : 1 , _id :0})
+        return res.status(200).json(agendas)
+
+    }catch(error){
+        return res.status(500).json({msg: 'error en el servidor'});
     }
 
 }
