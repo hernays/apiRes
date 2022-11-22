@@ -6,7 +6,7 @@ import { validarCampos, validarhora } from "../helpers/validarCampos.js";
 const routerArticulos = express();
 
 routerArticulos.post('', guardarArticulos )
-routerArticulos.get('', listarArticulos )
+routerArticulos.get('/:limit', listarArticulos )
 routerArticulos.delete('/:id', borrarArticulos )
 
 /* routerAgenda.post('/save' ,[

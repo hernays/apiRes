@@ -1,6 +1,7 @@
 import moment from "moment";
 import { SchemaArticulo } from '../schemas/articulos.js';
 import { SchemaUsuario } from "../schemas/usuarios.js";
+import { SchemaNotify } from "../schemas/notify.js";
 import {v2 as cloudinary}  from 'cloudinary'; 
 import  axios  from 'axios';
 import webpush from 'web-push';
@@ -61,8 +62,10 @@ export const guardarArticulos = async(req , res) => {
 
 export const listarArticulos = async(req, res) => {
 
+    const { limit } = req.params;
+
     try{
-        const articulos = await SchemaArticulo.find()
+        const articulos = await SchemaArticulo.find().sort({$natural:-1}).limit(Number(limit))
         .populate(
             {
                 "path":'usuario',
@@ -108,7 +111,19 @@ export const borrarArticulos = async(req , res) => {
 const notify = async() => {
   
     const usuariosAdmin = await SchemaUsuario.find({rol:'user'});
-    console.log(usuariosAdmin)
+    const usuariosAnonimos = await SchemaNotify.find();
+       
+          for(let usuarios of usuariosAnonimos){
+            const datos = {
+                notify:{
+                    endpoint:usuarios.endpoint,
+                    auth: usuarios.auth,
+                    p256dh: usuarios.p256dh
+                }
+            }
+            usuariosAdmin.push(datos)
+          }
+
         for( const admin of usuariosAdmin){
             if(admin.notify){
                 const { endpoint , auth , p256dh } = admin.notify; 
