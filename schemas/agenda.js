@@ -41,6 +41,17 @@ const SchemaAgenda = Schema({
         type:Boolean,
         requied:false,
         default:true
+    },
+    usuario:{
+        type:Schema.Types.ObjectId,
+        ref:'Usuario',
+        required:[false,'el usuario es obligatorio'],
+        default:null
+    },
+    nuevo:{
+        type:Boolean,
+        required:false,
+        default:true
     }
 })
 

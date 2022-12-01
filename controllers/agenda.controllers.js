@@ -6,7 +6,7 @@ import webpush from 'web-push';
 moment().locale('es');
 export const guardarAgenda = async(req , res) => {
 
-    const { nombre , servicio , dia , hora , horaServicio , telefono , mes , id} = req.body;
+    const { nombre , servicio , dia , hora , horaServicio , telefono , mes , id , nuevo} = req.body;
        const tramo = hora + horaServicio;
        let valor = 0;
 
@@ -23,9 +23,9 @@ export const guardarAgenda = async(req , res) => {
         try{
 
              await SchemaAgendas.remove({mes : mes-2})
-             
+             const usuario = id;
             const agenda = new SchemaAgendas({
-                nombre , servicio, dia, hora , mes , tramo , telefono , valor
+                usuario , nombre , servicio, dia, hora , mes , tramo , telefono , valor , nuevo
             })
 
             agenda.save();
@@ -63,8 +63,11 @@ export const getAgendaDay = async(req ,res) => {
 
     const { dia , mes } = req.params;
     try{
-        const agenda = await SchemaAgendas.find({dia : dia , mes : mes});
-   
+        const agenda = await SchemaAgendas.find({dia : dia , mes : mes}).populate({
+            path:'usuario',
+            select:'nombre apellido rol'
+        })
+        
         if(agenda.length === 0) return res.status(400).json({
             msg:'No se encontraron registros.'
         })
@@ -115,6 +118,20 @@ export const borrarHoras = async(req , res) => {
 
 }
 
+export const actualizarVista = async(req , res) => {
+         
+    const  ids =  req.body;
+
+    try{
+        ids.forEach(async (id) => {
+            await SchemaAgendas.findByIdAndUpdate(id, {nuevo : false})
+        });
+        return res.status(200).json(false)
+    }catch(error){
+        return res.status(500).json({msg: 'error en el servidor'});
+    }
+
+}
 
 export const totalMes = async(req , res) => {
          
