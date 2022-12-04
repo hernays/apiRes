@@ -50,17 +50,18 @@ const SchemaUsuarios = Schema( {
         default : true
     },
     notify : {
+        required : false,
         p256dh :{
             type:String,
-            required : true
+            required : false
           },
           endpoint:{
             type: String,
-            required : true
+            required : false
           },
           auth:{
             type: String,
-            required : true
+            required : false
           },
     }
 });

@@ -14,7 +14,6 @@ export const usuariosGuardar = async ( req , res ) => {
 
     const { nombre , password , correo , direccion , numero , apellido , rol = 'user' , telefono } = req.body;
 
-    console.log(nombre)
     const  sal  = pkg.genSaltSync ( 10 ) ; 
     const  hash  = pkg.hashSync ( password ,  sal ) ; 
     const passwordEncrypt = hash;
@@ -27,7 +26,7 @@ export const usuariosGuardar = async ( req , res ) => {
         } );
            
         usuarios.save();
-        res.status(200).json({msg: 'Usuario Registrado con Exito'});
+        return res.status(200).json({msg: 'Usuario Registrado con Exito'});
         
     } catch (error) {
         console.log(error);
@@ -51,14 +50,15 @@ export const actualizarUsuario = async( req , res ) => {
     const { id } = req.params;
     const { _id , password , google , rol , estado , ...rest
      } = req.body;
+
     try{
         const usuario = await SchemaUsuario.findByIdAndUpdate( id , rest );
-        res.status(200).json({
+       return res.status(200).json({
             rest
         })
     }catch(err){
-        console.log(err)
-        res.status(500).json({msg: 'Error en la conexión, contacte a su administrador'})
+        console.log("errorsss",err)
+        return res.status(500).json({msg: 'Error en la conexión, contacte a su administrador'})
     }
 }
 
@@ -87,9 +87,11 @@ export const consultarUsuario = async( req , res ) => {
         res.status(200).json({ 
             id:usuario._id,
             nombre:usuario.nombre,
-            apellido:usuario.apellido,
             rol:usuario.rol,
-            image:usuario.image
+            image:usuario.image,
+            direccion : usuario.direccion,
+            telefono : usuario.telefono,
+            correo:usuario.correo
         })
 
     }catch(err){
@@ -103,7 +105,7 @@ export const actualizarRol = async( req , res) => {
     const { id } = req.body;
     try{
         const usuario = await SchemaUsuario.findByIdAndUpdate( id , {rol : 'admin'})
-        console.log(usuario)
+
         if(usuario.estado === false)    return res.status(400).json({msg:'Usuario se encuentra desabilitado no se puede cumplir con su requerimiento'})
         if(usuario.rol    === 'admin')  return res.status(400).json({msg:'Usuario ya es administrador'});
         res.status(200).json({msg : 'Rol del usuario actualizado con exito !!!'})
@@ -123,7 +125,7 @@ export const actualizarRol = async( req , res) => {
          
     const { mimetype } = req.files.archivo;
 
-    console.log(mimetype , req.files.archivo)
+
       if(mimetype !== 'image/jpg' && mimetype !== 'image/png' && mimetype !== 'image/jpeg'
       && mimetype !== 'image/gif' && mimetype !== 'image/HEIC' && mimetype !== 'image/webp'
       && mimetype !== 'image/avif' && mimetype !== 'image/heic' && mimetype !== 'application/octet-stream'){

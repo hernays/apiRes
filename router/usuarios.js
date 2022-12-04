@@ -32,11 +32,9 @@ routerUsuario.put('/usuario/:id', [
     check('id', 'el id no es valido').isMongoId(),
     check('id').custom( validarId ),
     check('nombre','el nombre es obligatorio').not().isEmpty(),
-    check('apellido','el apellido es obligatorio').not().isEmpty(),
     check('correo','el correo no es valido').isEmail(),
     check('direccion','las direccion es obligatoria').not().isEmpty(),
     check('telefono','el telefono es obligatoria').not().isEmpty().isNumeric(),
-    check('rol').custom( validarRol ),
     validarCampos,
     validarEmailExiste
 ] ,actualizarUsuario);

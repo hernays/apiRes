@@ -17,7 +17,7 @@ export const guardarAgenda = async(req , res) => {
         case 'kapping (revestimiento)' : valor = 15; break;
         case 'Esmaltado Permanente' : valor = 10; break;
         case 'Manicura (limpieza)' : valor = 10; break;
-        case 'Solo Retiro' : valor = 3; break;
+        case 'Solo Retiro' : valor = 5; break;
        }
 
         try{

@@ -14,7 +14,7 @@ export const generarJWT = async( req , res , next ) => {
     // validar si el correo existe en la DB
     const usuario = await SchemaUsuario.find({nombre});
     if(usuario.length <= 0)  
-    res.status(400).json({msg:'nombre invalido'})
+    return res.status(400).json({msg:'nombre invalido'})
     
     req.usuario = usuario;
     const passworCompare = pkg.compareSync(password, usuario[0].password); // true

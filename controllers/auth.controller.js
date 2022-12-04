@@ -4,7 +4,7 @@ export const authController = async(req , res) => {
     const { correo , password } = req.body;
 
     console.log(req.usuario)
-    res.status(200).json({
+    return res.status(200).json({
         token: req.token,
         rol:req.usuario[0].rol,
         alias:req.usuario[0].nombre,
