@@ -12,8 +12,6 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 // test
-
-import webpush from 'web-push';
 import routerNotificacion from '../router/notificacion.js';
 
 export class Server {
@@ -51,72 +49,9 @@ export class Server {
         this.app.use('/api/agenda', routerAgenda);
         this.app.use('/api/articulos', routerArticulos);
         this.app.use('/api/notificacion', routerNotificacion);
-
-        this.app.post('/api/test', (req, res) => {
-
-            const { endpoint } = req.body;
-            const { auth , p256dh }  = req.body.keys;
-
-            const vapidKeys = {
-            publicKey:'BLbYE-LHO-H7zD53WcZ_KPYaLh6G70VrMiOngCSTp3P8boggr7T-NxNnIoh7RMpcRq9fWXHCI3MeyV9ACqezm_k',
-            privateKey:'7Y6Td9C6xHFlhK3zeRb5hLK-3qya2PFhxm6Cs9gnyvc'
-           } 
-
-
-        webpush.setVapidDetails(
-                'mailto:hernays12@gmail.com',
-                vapidKeys.publicKey,
-                vapidKeys.privateKey
-            );
-            
-            webpush.getVapidHeaders(
-              'https://dubenails.xyz',
-              'mailto:hernays12@gmail.com',
-              vapidKeys.publicKey,
-              vapidKeys.privateKey,
-              'aes128gcm'
-            )
-
-            const pushSubscription = {
-                endpoint ,
-                expirationTime:null,
-                keys: {
-                    auth ,
-                    p256dh 
-                }
-            }
-
-
-            const payload = {
-                     "notification":{
-                        "title":"saludos",
-                        "body":"desde el body",
-                        "vibrate":[100,50,100],
-                        "image": "https://cdn-icons-png.flaticon.com/512/1088/1088537.png",
-                        "data":{
-                            "dateOfArrival":Date.now(),
-                            "primaryKey":1
-                        },
-                        "actions":[{
-                            "action":"explore",
-                            "title":"hernays"
-                        }],
-
-                     }
-            }
-
-            webpush.sendNotification(pushSubscription , JSON.stringify(payload))
-            .catch(error => {console.log('error', error)})
-            .then(exito => {
-                console.log('extisosss' , exito)
-                return res.status(200).json({ msg: 'notificado con exito' })
-            })
-
-        });
         this.app.get('/*', (req, res) => {
             res.sendFile(this.__dirname.replace('/modelos', '') + '/public/index.html')
         })
-
     }
 
     iniciar() {
