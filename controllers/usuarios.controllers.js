@@ -139,8 +139,8 @@ export const actualizarRol = async( req , res) => {
         format: 'jpg',
         use_filename: true,
         transformation:{
-            width:80,
-            height:70
+            width:300,
+            height:300
         }
     })
         const user = await SchemaUsuario.findByIdAndUpdate(id , {image : secure_url })
