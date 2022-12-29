@@ -68,7 +68,7 @@ export const getAgendaDay = async(req ,res) => {
             select:'nombre apellido rol'
         })
         
-        if(agenda.length === 0) return res.status(400).json({
+        if(agenda.length === 0) return res.status(200).json({
             msg:'No se encontraron registros.'
         })
         
