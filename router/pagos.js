@@ -5,6 +5,10 @@ import FormData from 'form-data';
 import { v4 } from 'uuid';
 const routerPagos = express();
 
+routerPagos.post('/confirmacion', (req, res) => {
+    res.status(200).send('ok');
+})
+
 routerPagos.get('/generar/:correo', async (req, res) => {
     const { correo } = req.params;
 
@@ -27,7 +31,7 @@ routerPagos.get('/generar/:correo', async (req, res) => {
         email: correo,
         timeout: 600,
         urlConfirmation: 'http://www.dubenails.xyz:1000/api/pagos/confirmacion',
-        urlReturn: 'https://www.dubenails.xyz/'
+        urlReturn: 'https://www.dubenails.xyz/agenda'
     }
 
     const data = firmaFLow(payloadFlow);
@@ -40,20 +44,15 @@ routerPagos.get('/generar/:correo', async (req, res) => {
         const urlRedirect = `${url}?token=${token}`;
         return res.status(200).json({ urlRedirect })
     } catch (error) {
-        console.log(error)
-        return res.status(400).json({msg :error.response.data.message});
+        return res.status(400).json({ msg: error.response.data.message });
     }
 
 });
 
-routerPagos.post('/confirmacion', (req , res) => {
-    res.status(200).send('ok');
-})
-
 routerPagos.post('/confirmar', async (req, res) => {
 
-    console.log("token",token)
     const { token } = req.body;
+    console.log(token)
     const { s } = firmaFLow({
         apiKey: process.env.API_KEY,
         token
