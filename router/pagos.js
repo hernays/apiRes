@@ -26,7 +26,7 @@ routerPagos.get('/generar/:correo', async (req, res) => {
         currency,
         email: correo,
         timeout: 600,
-        urlConfirmation: 'https://www.dubenails.xyz:1000/confirmar/',
+        urlConfirmation: 'https://www.dubenails.xyz/confirmacion/',
         urlReturn: 'https://www.dubenails.xyz/'
     }
 
