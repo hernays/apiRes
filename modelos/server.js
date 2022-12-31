@@ -13,6 +13,7 @@ import { dirname } from 'path';
 
 // test
 import routerNotificacion from '../router/notificacion.js';
+import routerPagos from '../router/pagos.js';
 
 export class Server {
     constructor() {
@@ -49,6 +50,7 @@ export class Server {
         this.app.use('/api/agenda', routerAgenda);
         this.app.use('/api/articulos', routerArticulos);
         this.app.use('/api/notificacion', routerNotificacion);
+        this.app.use('/api/pagos', routerPagos);
         this.app.get('/*', (req, res) => {
             res.sendFile(this.__dirname.replace('/modelos', '') + '/public/index.html')
         })

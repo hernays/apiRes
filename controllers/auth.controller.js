@@ -21,7 +21,8 @@ export const authUsuarios = async(req , res ) => {
         id : user._id,
         nombre : user.nombre,
         rol: user.rol,
-        telefono:user.telefono
+        telefono:user.telefono,
+        correo:user.correo
     }
       res.status(200).json(data);
 }
