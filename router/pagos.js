@@ -40,6 +40,7 @@ routerPagos.get('/generar/:correo', async (req, res) => {
         const urlRedirect = `${url}?token=${token}`;
         return res.status(200).json({ urlRedirect })
     } catch (error) {
+        console.log(error)
         return res.status(400).json({msg :error.response.data.message});
     }
 
