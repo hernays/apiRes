@@ -45,13 +45,23 @@ const SchemaAgenda = Schema({
     usuario:{
         type:Schema.Types.ObjectId,
         ref:'Usuario',
-        required:[false,'el usuario es obligatorio'],
+        required: false,
         default:null
     },
     nuevo:{
         type:Boolean,
         required:false,
         default:true
+    },
+    token: {
+        type: String,
+        requied: false,
+        default: null
+    },
+    estado:{
+    type:Boolean,
+    required : false,
+    default : false
     }
 })
 

@@ -9,8 +9,8 @@ routerPagos.post('/confirmacion', (req, res) => {
     res.status(200).send('ok');
 })
 
-routerPagos.get('/generar/:correo', async (req, res) => {
-    const { correo } = req.params;
+routerPagos.get('/generar/:correo/:tokenUsuario', async (req, res) => {
+    const { correo , tokenUsuario } = req.params;
 
     if (correo === undefined) {
         return res.status(400).json({
@@ -31,7 +31,7 @@ routerPagos.get('/generar/:correo', async (req, res) => {
         email: correo,
         timeout: 600,
         urlConfirmation: 'http://www.dubenails.xyz:1000/api/pagos/confirmacion',
-        urlReturn: 'https://www.dubenails.xyz/agenda'
+        urlReturn: `https://www.dubenails.xyz/confirmacion?token=${tokenUsuario}`
     }
 
     const data = firmaFLow(payloadFlow);
@@ -42,7 +42,7 @@ routerPagos.get('/generar/:correo', async (req, res) => {
 
         const { token, url, flowOrder } = datos.data;
         const urlRedirect = `${url}?token=${token}`;
-        return res.status(200).json({ urlRedirect })
+        return res.status(200).json({ token , urlRedirect })
     } catch (error) {
         return res.status(400).json({ msg: error.response.data.message });
     }
@@ -52,7 +52,6 @@ routerPagos.get('/generar/:correo', async (req, res) => {
 routerPagos.post('/confirmar', async (req, res) => {
 
     const { token } = req.body;
-    console.log(token)
     const { s } = firmaFLow({
         apiKey: process.env.API_KEY,
         token

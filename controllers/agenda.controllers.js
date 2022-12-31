@@ -6,7 +6,7 @@ import webpush from 'web-push';
 moment().locale('es');
 export const guardarAgenda = async(req , res) => {
 
-    const { nombre , servicio , dia , hora , horaServicio , telefono , mes , id , nuevo} = req.body;
+    const { nombre , servicio , dia , hora , horaServicio , telefono , mes , id , nuevo , estado , token} = req.body;
        const tramo = hora + horaServicio;
        let valor = 0;
 
@@ -25,7 +25,7 @@ export const guardarAgenda = async(req , res) => {
              await SchemaAgendas.remove({mes : mes-2})
              const usuario = id;
             const agenda = new SchemaAgendas({
-                usuario , nombre , servicio, dia, hora , mes , tramo , telefono , valor , nuevo
+                usuario , nombre , servicio, dia, hora , mes , tramo , telefono , valor , nuevo , token , estado
             })
 
             agenda.save();
@@ -144,6 +144,10 @@ export const totalMes = async(req , res) => {
     }catch(error){
         return res.status(500).json({msg: 'error en el servidor'});
     }
+
+}
+
+export const agregarToken = async( req , res ) => {
 
 }
 

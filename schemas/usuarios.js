@@ -1,14 +1,14 @@
-import  mongoose from "mongoose";
+import mongoose from "mongoose";
 
 
-const { Schema , model } = mongoose;
+const { Schema, model } = mongoose;
 
 
 
-const SchemaUsuarios = Schema( {
+const SchemaUsuarios = Schema({
     nombre: {
         type: String,
-        required: [ true , 'El nombre es obligatorio'],
+        required: [true, 'El nombre es obligatorio'],
         unique: true,
     },
     apellido: {
@@ -17,54 +17,54 @@ const SchemaUsuarios = Schema( {
     },
     password: {
         type: String,
-        required: [ true , 'La contraseña es obligatorio'],
+        required: [true, 'La contraseña es obligatorio'],
     },
     correo: {
         type: String,
-        required :[ true , 'El correo es obligatorio'],
+        required: [true, 'El correo es obligatorio'],
         unique: true,
     },
     direccion: {
         type: String,
-        required: [ true , 'La dirección es obligatoria'],
+        required: [true, 'La dirección es obligatoria'],
     },
     telefono: {
         type: Number,
-        required: [ true , 'El telefono es obligatorio'],
+        required: [true, 'El telefono es obligatorio'],
     },
     rol: {
-        type : String,
-        require: [true , 'El rol es requerido'],
+        type: String,
+        require: [true, 'El rol es requerido'],
     },
-    image:{
-     type: String,
-     require:false,
-     default:null
+    image: {
+        type: String,
+        require: false,
+        default: null
     },
-    google :{
-        type : Boolean,
-        default : false,
-    },
-    estado : {
+    google: {
         type: Boolean,
-        default : true
+        default: false,
     },
-    notify : {
-        required : false,
-        p256dh :{
-            type:String,
-            required : false
-          },
-          endpoint:{
+    estado: {
+        type: Boolean,
+        default: true
+    },
+    notify: {
+        required: false,
+        p256dh: {
             type: String,
-            required : false
-          },
-          auth:{
+            required: false
+        },
+        endpoint: {
             type: String,
-            required : false
-          },
+            required: false
+        },
+        auth: {
+            type: String,
+            required: false
+        }
     }
 });
 
 
-export const SchemaUsuario = model('Usuario' , SchemaUsuarios);
+export const SchemaUsuario = model('Usuario', SchemaUsuarios);
