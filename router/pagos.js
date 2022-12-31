@@ -8,16 +8,16 @@ const routerPagos = express();
 routerPagos.get('/generar/:correo', async (req, res) => {
     const { correo } = req.params;
 
-    if(correo === undefined){
- return res.status(400).json({
-    msg: 'correo invalido o formato invalido'
- })
+    if (correo === undefined) {
+        return res.status(400).json({
+            msg: 'correo invalido o formato invalido'
+        })
     }
-  
+
     const apiKey = process.env.API_KEY;
     const currency = 'CLP';
     const orden = v4();
-    
+
     const payloadFlow = {
         apiKey,
         amount: 3000,
@@ -25,18 +25,23 @@ routerPagos.get('/generar/:correo', async (req, res) => {
         subject: 'Detalle Servicio',
         currency,
         email: correo,
-        timeout : 600,
-        urlConfirmation: 'https://dubenails.xyz/confirmacion',
+        timeout: 600,
+        urlConfirmation: 'https://dubenails.xyz:1000/confirmar',
         urlReturn: 'https://dubenails.xyz'
     }
 
     const data = firmaFLow(payloadFlow);
-    const datos = await axios.post('https://sandbox.flow.cl/api/payment/create', data.bodyFormData,
-        { headers: data.bodyFormData.getHeaders() })
-    const { token, url, flowOrder } = datos.data;
 
-    const urlRedirect = `${url}?token=${token}`;
-    return res.status(200).json({ urlRedirect })
+    try {
+        const datos = await axios.post('https://sandbox.flow.cl/api/payment/create', data.bodyFormData,
+            { headers: data.bodyFormData.getHeaders() });
+
+        const { token, url, flowOrder } = datos.data;
+        const urlRedirect = `${url}?token=${token}`;
+        return res.status(200).json({ urlRedirect })
+    } catch (error) {
+        return res.status(400).json({msg :error.response.data.message});
+    }
 
 });
 
@@ -44,6 +49,7 @@ routerPagos.get('/generar/:correo', async (req, res) => {
 
 routerPagos.post('/confirmar', async (req, res) => {
 
+    console.log("token",token)
     const { token } = req.body;
     const { s } = firmaFLow({
         apiKey: process.env.API_KEY,
@@ -61,7 +67,7 @@ routerPagos.post('/confirmar', async (req, res) => {
     if (data.status === 2) {
         return res.status(200).json(data)
     } else {
-        return res.status(200).json({msg:'pagonok'})
+        return res.status(200).json({ msg: 'pagonok' })
     }
 
 })
