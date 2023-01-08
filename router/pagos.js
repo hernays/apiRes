@@ -10,9 +10,8 @@ routerPagos.post('/confirmacion', (req, res) => {
     res.status(200).send('ok');
 })
 
-routerPagos.get('/generar/:correo/:tokenUsuario/:mes/:dia:/:hora', async (req, res) => {
-    const { correo , tokenUsuario } = req.params;
-
+routerPagos.get('/generar/:correo/:tokenUsuario/:mes/:dia/:hora', async (req, res) => {
+    const { correo , tokenUsuario , mes , dia , hora} = req.params;
     if (correo === undefined) {
         return res.status(400).json({
             msg: 'correo invalido o formato invalido'
@@ -69,12 +68,12 @@ routerPagos.post('/confirmar', async (req, res) => {
     if (data.status === 2) {
         try{
             const agenda = await SchemaAgendas.findByIdAndUpdate(id , {estado : true})
-            console.log('aqui')
             return res.status(200).json({mes: 'pagook'})
         }catch(error){
             return res.status(500).json({msg:'ocurrio un error en el servidor'})
         }
     } else {
+        const agenda = await SchemaAgendas.findByIdAndDelete(id)
         return res.status(200).json({ msg: 'pagonok' })
     }
 

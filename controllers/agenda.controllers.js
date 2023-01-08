@@ -2,6 +2,8 @@ import { SchemaAgendas } from "../schemas/agenda.js";
 import moment from "moment";
 import { SchemaUsuario } from "../schemas/usuarios.js";
 import webpush from 'web-push';
+import mongoose from "mongoose";
+import jwt  from "jsonwebtoken";
 
 moment().locale('es');
 export const guardarAgenda = async (req, res) => {
@@ -155,14 +157,20 @@ export const buscarIdUsuario = async (req, res) => {
         if(!id || !dia || !hora || !mes ){
             return res.status(404).json({msg: 'Algo Salio Mal Vuelva a Intentarlo'})
         }
+        
+        const id_comillas = jwt.verify(id , 'hernaysgonzalez').slice(1);
+        const idUsuario = id_comillas.slice(0 ,id_comillas.length -1 )
+        if(!mongoose.Types.ObjectId.isValid(idUsuario)){
+            return res.status(400).json({msg:'id invalido'})
 
-        const agenda = await SchemaAgendas.find({
-            usuario: id,
+        }
+
+         const agenda = await SchemaAgendas.find({
+            usuario: idUsuario,
             mes,
             dia,
             hora
-        });
-
+        }); 
         res.status(200).send({token : agenda[0].token, id : agenda[0]._id})
 
     }catch(error){
