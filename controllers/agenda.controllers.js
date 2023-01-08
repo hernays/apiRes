@@ -50,13 +50,12 @@ export const getAgenda = async (req, res) => {
         if (agenda.length === 0) return res.status(400).json({
             msg: 'No se encontraron registros.'
         })
-
-        res.status(200).json({
+        return res.status(200).json({
             agenda
         })
     } catch (err) {
         console.log(' error')
-        res.status(500).json({ msg: 'error en el servidor' })
+        return res.status(500).json({ msg: 'error en el servidor' })
     }
 
 }
@@ -76,7 +75,6 @@ export const getAgendaDay = async (req, res) => {
         })
 
         const data = agenda.filter( data => data.estado === true)
-
         return res.status(200).json({
             data
         })
@@ -105,9 +103,9 @@ export const borrarMes = async (req, res) => {
 
     try {
         const agenda = await SchemaAgendas.remove({ mes: mes })
-        res.status(200).json({ msg: 'borrado con exito' })
+        return res.status(200).json({ msg: 'borrado con exito' })
     } catch (err) {
-        res.status(500).json({ msg: 'error en el servidor' })
+        return res.status(500).json({ msg: 'error en el servidor' })
     }
 }
 
@@ -116,9 +114,9 @@ export const borrarHoras = async (req, res) => {
     const { nombre, dia } = req.body;
     try {
         const agenda = await SchemaAgendas.deleteOne({ nombre: nombre, dia: dia })
-        res.status(200).json({ msg: 'agenda eliminada con exito' });
+        return res.status(200).json({ msg: 'agenda eliminada con exito' });
     } catch (err) {
-        res.status(500).json({ msg: 'error en el servidor' })
+        return res.status(500).json({ msg: 'error en el servidor' })
     }
 
 }
@@ -174,7 +172,7 @@ export const buscarIdUsuario = async (req, res) => {
             dia,
             hora
         }); 
-        res.status(200).send({token : agenda[0].token, id : agenda[0]._id})
+        return res.status(200).send({token : agenda[0].token, id : agenda[0]._id})
 
     }catch(error){
         return res.status(500).json({msg:'error en el servidor'});
