@@ -9,6 +9,7 @@ moment().locale('es');
 export const guardarAgenda = async (req, res) => {
 
     const { nombre, servicio, dia, hora, horaServicio, telefono, mes, id, nuevo, estado, token } = req.body;
+
     const tramo = hora + horaServicio;
     let valor = 0;
 
@@ -171,6 +172,7 @@ export const buscarIdUsuario = async (req, res) => {
             dia,
             hora:horaFormato
         }); 
+        console.log(agenda)
         return res.status(200).send({token : agenda[0].token, id : agenda[0]._id})
 
     }catch(error){
