@@ -153,8 +153,11 @@ export const totalMes = async (req, res) => {
 export const buscarIdUsuario = async (req, res) => {
 
     const { id, dia, hora, mes } = req.params;
-    const horaFormato = hora.replace('_', '.');
-    console.log(horaFormato)
+
+    let horaFormato;
+    if(hora.includes('_')){
+        horaFormato = hora.replace('_', '.');
+    }
      
     try{
         if(!id || !dia || !hora || !mes ){
