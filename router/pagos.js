@@ -52,6 +52,7 @@ routerPagos.get('/generar/:correo/:tokenUsuario/:mes/:dia/:hora', async (req, re
 routerPagos.post('/confirmar', async (req, res) => {
 
     const { token , id} = req.body;
+    console.log(token)
     const { s } = firmaFLow({
         apiKey: process.env.API_KEY,
         token
