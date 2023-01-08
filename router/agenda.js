@@ -1,7 +1,7 @@
 import  express  from "express";
 import { check } from "express-validator";
 import { validarCampos, validarhora } from "../helpers/validarCampos.js";
-import {  actualizarVista, borrarHoras, borrarMes, getAgenda, getAgendaDay, guardarAgenda, habilitarDia, totalMes } from '../controllers/agenda.controllers.js';
+import {  actualizarVista, borrarHoras, borrarMes, buscarIdUsuario, getAgenda, getAgendaDay, guardarAgenda, habilitarDia, totalMes } from '../controllers/agenda.controllers.js';
 
 const routerAgenda = express();
 
@@ -20,6 +20,7 @@ routerAgenda.delete('/borrar' , borrarMes)
 routerAgenda.post('/borrarHora', borrarHoras)
 routerAgenda.get('/:dia/:mes/:habilitar', habilitarDia);
 routerAgenda.get('/:mes', totalMes);
+routerAgenda.get('/:id/:mes/:dia/:hora', buscarIdUsuario)
 
 
 export default routerAgenda;

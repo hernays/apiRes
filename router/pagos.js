@@ -3,13 +3,14 @@ import axios from 'axios';
 import CryptoJS from 'crypto-js';
 import FormData from 'form-data';
 import { v4 } from 'uuid';
+import { SchemaAgendas } from '../schemas/agenda.js';
 const routerPagos = express();
 
 routerPagos.post('/confirmacion', (req, res) => {
     res.status(200).send('ok');
 })
 
-routerPagos.get('/generar/:correo/:tokenUsuario', async (req, res) => {
+routerPagos.get('/generar/:correo/:tokenUsuario/:mes/:dia:/:hora', async (req, res) => {
     const { correo , tokenUsuario } = req.params;
 
     if (correo === undefined) {
@@ -31,7 +32,7 @@ routerPagos.get('/generar/:correo/:tokenUsuario', async (req, res) => {
         email: correo,
         timeout: 600,
         urlConfirmation: 'http://www.dubenails.xyz:1000/api/pagos/confirmacion',
-        urlReturn: `https://www.dubenails.xyz/confirmacion?token=${tokenUsuario}`
+        urlReturn: `https://www.dubenails.xyz/confirmacion/${tokenUsuario}/${mes}/${dia}/${hora}`
     }
 
     const data = firmaFLow(payloadFlow);
@@ -51,7 +52,7 @@ routerPagos.get('/generar/:correo/:tokenUsuario', async (req, res) => {
 
 routerPagos.post('/confirmar', async (req, res) => {
 
-    const { token } = req.body;
+    const { token , id} = req.body;
     const { s } = firmaFLow({
         apiKey: process.env.API_KEY,
         token
@@ -66,7 +67,13 @@ routerPagos.post('/confirmar', async (req, res) => {
     })
 
     if (data.status === 2) {
-        return res.status(200).json(data)
+        try{
+            const agenda = await SchemaAgendas.findByIdAndUpdate(id , {estado : true})
+            console.log('aqui')
+            return res.status(200).json({mes: 'pagook'})
+        }catch(error){
+            return res.status(500).json({msg:'ocurrio un error en el servidor'})
+        }
     } else {
         return res.status(200).json({ msg: 'pagonok' })
     }
