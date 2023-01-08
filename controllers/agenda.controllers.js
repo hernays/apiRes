@@ -37,7 +37,7 @@ export const guardarAgenda = async (req, res) => {
             msg: 'agenda registrada con exito!!!'
         })
     } catch (err) {
-        res.status(500).json({ msg: 'error en el servidor' })
+        res.status(500).json({ msg: 'error en el servidor agenda' })
     }
 
 }
