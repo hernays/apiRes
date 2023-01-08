@@ -63,6 +63,7 @@ export const getAgenda = async (req, res) => {
 
 export const getAgendaDay = async (req, res) => {
 
+    console.log('entro en funcion')
     const { dia, mes } = req.params;
     try {
         const agenda = await SchemaAgendas.find({ dia: dia, mes: mes }).populate({
@@ -74,8 +75,10 @@ export const getAgendaDay = async (req, res) => {
             msg: 'No se encontraron registros.'
         })
 
+        const data = agenda.filter( data => data.estado === true)
+
         return res.status(200).json({
-            agenda
+            data
         })
     } catch (err) {
         console.log(' error')
