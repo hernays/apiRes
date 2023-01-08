@@ -31,7 +31,7 @@ routerPagos.get('/generar/:correo/:tokenUsuario/:mes/:dia/:hora', async (req, re
         email: correo,
         timeout: 600,
         urlConfirmation: 'http://www.dubenails.xyz:1000/api/pagos/confirmacion',
-        urlReturn: `https://www.dubenails.xyz/confirmacion/${tokenUsuario}/${mes}/${dia}/${hora}`
+        urlReturn: `https://www.dubenails.xyz/confirmacion/${tokenUsuario}/${mes}/${dia}/${horaFormato}`
     }
 
     const data = firmaFLow(payloadFlow);

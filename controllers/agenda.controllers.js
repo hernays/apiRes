@@ -153,6 +153,8 @@ export const totalMes = async (req, res) => {
 export const buscarIdUsuario = async (req, res) => {
 
     const { id, dia, hora, mes } = req.params;
+    const horaFormato = hora.replace('_', '.');
+    console.log(horaFormato)
      
     try{
         if(!id || !dia || !hora || !mes ){
@@ -170,7 +172,7 @@ export const buscarIdUsuario = async (req, res) => {
             usuario: idUsuario,
             mes,
             dia,
-            hora
+            hora:horaFormato
         }); 
         return res.status(200).send({token : agenda[0].token, id : agenda[0]._id})
 
