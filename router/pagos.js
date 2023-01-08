@@ -52,11 +52,13 @@ routerPagos.get('/generar/:correo/:tokenUsuario/:mes/:dia/:hora', async (req, re
 routerPagos.post('/confirmar', async (req, res) => {
 
     const { token , id} = req.body;
-    console.log(token)
+    console.log("confirmar_token",token)
     const { s } = firmaFLow({
         apiKey: process.env.API_KEY,
         token
     })
+
+    console.log('paso 1')
 
     const { data } = await axios.get('https://sandbox.flow.cl/api/payment/getStatus', {
         params: {
@@ -65,15 +67,18 @@ routerPagos.post('/confirmar', async (req, res) => {
             s
         }
     })
-
+    console.log('paso 2')
     if (data.status === 2) {
         try{
+            console.log('paso 3')
             const agenda = await SchemaAgendas.findByIdAndUpdate(id , {estado : true})
             return res.status(200).json({mes: 'pagook'})
         }catch(error){
+            console.log('paso 4')
             return res.status(500).json({msg:'ocurrio un error en el servidor'})
         }
     } else {
+        console.log('paso 5')
         const agenda = await SchemaAgendas.findByIdAndDelete(id)
         return res.status(200).json({ msg: 'pagonok' })
     }

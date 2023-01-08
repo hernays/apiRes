@@ -10,6 +10,7 @@ export const guardarAgenda = async (req, res) => {
 
     const { nombre, servicio, dia, hora, horaServicio, telefono, mes, id, nuevo, estado, token } = req.body;
 
+    console.log('tokeneee', token)
     const tramo = hora + horaServicio;
     let valor = 0;
 
