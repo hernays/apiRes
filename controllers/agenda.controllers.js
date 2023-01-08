@@ -151,14 +151,7 @@ export const totalMes = async (req, res) => {
 }
 
 export const buscarIdUsuario = async (req, res) => {
-
     const { id, dia, hora, mes } = req.params;
-
-    let horaFormato;
-    if(hora.includes('_')){
-        horaFormato = hora.replace('_', '.');
-    }
-     
     try{
         if(!id || !dia || !hora || !mes ){
             return res.status(404).json({msg: 'Algo Salio Mal Vuelva a Intentarlo'})
@@ -171,6 +164,7 @@ export const buscarIdUsuario = async (req, res) => {
 
         }
 
+        let horaFormato = (hora.includes('_')) ? hora.replace('_', '.') : hora;
          const agenda = await SchemaAgendas.find({
             usuario: idUsuario,
             mes,
