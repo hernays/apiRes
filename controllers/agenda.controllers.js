@@ -10,17 +10,17 @@ export const guardarAgenda = async (req, res) => {
 
     const { nombre, servicio, dia, hora, horaServicio, telefono, mes, id, nuevo, estado, token } = req.body;
 
-    console.log('tokeneee', token)
+
     const tramo = hora + horaServicio;
     let valor = 0;
 
     switch (servicio) {
-        case 'Acrilicas': valor = 18; break;
-        case 'Polygel': valor = 18; break;
-        case 'Relleno acrilico/polygel': valor = 15; break;
-        case 'kapping (revestimiento)': valor = 15; break;
-        case 'Esmaltado Permanente': valor = 10; break;
-        case 'Manicura (limpieza)': valor = 10; break;
+        case 'Acrilicas': valor = 20; break;
+        case 'Polygel': valor = 20; break;
+        case 'Relleno acrilico/polygel': valor = 17; break;
+        case 'kapping (revestimiento)': valor = 17; break;
+        case 'Esmaltado Permanente': valor = 13; break;
+        case 'Manicura (limpieza)': valor = 13; break;
         case 'Solo Retiro': valor = 5; break;
     }
 
