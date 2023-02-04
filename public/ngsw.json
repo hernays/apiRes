@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1675173470018,
+  "timestamp": 1675529552874,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,11 +13,11 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.b3b4e2af9805e0ad.js",
+        "/main.f977ec35f0a68067.js",
         "/manifest.webmanifest",
         "/polyfills.0a6b30248a5340cc.js",
         "/runtime.90a09f30b6b13fb1.js",
-        "/styles.6e7ada265d4c33b3.css"
+        "/styles.a569139bd06fa502.css"
       ],
       "patterns": []
     },
@@ -37,9 +37,14 @@
         "/assets/icons/icon-512x512.png",
         "/assets/icons/icon-72x72.png",
         "/assets/icons/icon-96x96.png",
+        "/assets/img/MUSICA ELECTRONICA PARA HACER EJERCICIO (Alan Walker - Dennis 2014)_160k.mp3",
         "/assets/img/fonto.jpg",
+        "/assets/img/fuegos-artificiales.gif",
         "/assets/img/home.png",
+        "/assets/img/logo_dubenails_arreglada.jpg",
+        "/assets/img/regalo.png",
         "/assets/img/userIcon.svg",
+        "/fuegos-artificiales.85bf02a59895aeb9.gif",
         "/userIcon.7b4a37a59c10fe53.svg"
       ],
       "patterns": []
@@ -72,16 +77,21 @@
     "/assets/icons/icon-512x512.png": "1104c658a794be2b04285b3c8ed16c5dfd99ae0b",
     "/assets/icons/icon-72x72.png": "f30c469c17a87e79b5bd43e0c5c67af511557cc7",
     "/assets/icons/icon-96x96.png": "92833a929e825bb78dd4ad3000b7606846e6b9e0",
+    "/assets/img/MUSICA ELECTRONICA PARA HACER EJERCICIO (Alan Walker - Dennis 2014)_160k.mp3": "60fdc99dc1706de44b931110b3843da3a6e751a2",
     "/assets/img/fonto.jpg": "7aa71282e8573c046fd9c661d5e52a4a25e992ac",
+    "/assets/img/fuegos-artificiales.gif": "a9a7df743cadb1b37cef8066bee745edeb815189",
     "/assets/img/home.png": "c628d470a885d063aed84eae6c11712538b26f0c",
+    "/assets/img/logo_dubenails_arreglada.jpg": "3786ed7ec74fd5349d2e44ecf8dfb30e61cba940",
+    "/assets/img/regalo.png": "a563d806b1d8a63b42269d63318c3a560dadd5fa",
     "/assets/img/userIcon.svg": "a2ef0a19016304b51a367fc00b763df389f13711",
     "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
-    "/index.html": "21af6439d8efbc0f985e6fa09d6e481ec7c9550e",
-    "/main.b3b4e2af9805e0ad.js": "971e93f293c464fa283ebed111b2259a266e20fa",
+    "/fuegos-artificiales.85bf02a59895aeb9.gif": "a9a7df743cadb1b37cef8066bee745edeb815189",
+    "/index.html": "07526d942630330dd24bef94e4589ad492c45e38",
+    "/main.f977ec35f0a68067.js": "88444369f12f5694c3287720d5e731de9c7bdabe",
     "/manifest.webmanifest": "05c3adf54239dccb1d64120700cb75fe77f364cd",
     "/polyfills.0a6b30248a5340cc.js": "a3e9b4806a6ccd1bcd8c7f3e60e80d064f344ee4",
     "/runtime.90a09f30b6b13fb1.js": "b4c081ed35710c9ee0b55fb8eb3529b3ae677f22",
-    "/styles.6e7ada265d4c33b3.css": "10683938c79ec2c8e85ee257b97ad39cc85a339b",
+    "/styles.a569139bd06fa502.css": "f7afd07cd90268ac081e5e2db90787422a1d3193",
     "/userIcon.7b4a37a59c10fe53.svg": "a2ef0a19016304b51a367fc00b763df389f13711"
   },
   "navigationUrls": [
