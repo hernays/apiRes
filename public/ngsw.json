@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1675529552874,
+  "timestamp": 1675534923664,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main.f977ec35f0a68067.js",
+        "/main.a1abfa68ac02c264.js",
         "/manifest.webmanifest",
         "/polyfills.0a6b30248a5340cc.js",
         "/runtime.90a09f30b6b13fb1.js",
@@ -86,8 +86,8 @@
     "/assets/img/userIcon.svg": "a2ef0a19016304b51a367fc00b763df389f13711",
     "/favicon.ico": "22f6a4a3bcaafafb0254e0f2fa4ceb89e505e8b2",
     "/fuegos-artificiales.85bf02a59895aeb9.gif": "a9a7df743cadb1b37cef8066bee745edeb815189",
-    "/index.html": "07526d942630330dd24bef94e4589ad492c45e38",
-    "/main.f977ec35f0a68067.js": "88444369f12f5694c3287720d5e731de9c7bdabe",
+    "/index.html": "d62d613cfde109b14600af0b958f401bb4ffe9bf",
+    "/main.a1abfa68ac02c264.js": "2f859fce3146d8994309f7393de04490f4ee9eda",
     "/manifest.webmanifest": "05c3adf54239dccb1d64120700cb75fe77f364cd",
     "/polyfills.0a6b30248a5340cc.js": "a3e9b4806a6ccd1bcd8c7f3e60e80d064f344ee4",
     "/runtime.90a09f30b6b13fb1.js": "b4c081ed35710c9ee0b55fb8eb3529b3ae677f22",
