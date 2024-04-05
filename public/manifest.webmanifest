@@ -1,8 +1,8 @@
 {
   "name": "dubeNails",
   "short_name": "dubeNails",
-  "theme_color": "#64227c",
-  "background_color": "#212848",
+  "theme_color": "#000000",
+  "background_color": "#000000",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
