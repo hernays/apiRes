@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1712341378930,
+  "timestamp": 1712342512605,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -14,11 +14,11 @@
         "/183.83ff6426dd2be2c0.js",
         "/favicon.ico",
         "/index.html",
-        "/main.ea23f4e6633b0782.js",
+        "/main.6cc5f4b8bab96043.js",
         "/manifest.webmanifest",
         "/polyfills.0dce0f59a8967687.js",
         "/runtime.85f3b3ae6f60c500.js",
-        "/styles.71b9af8c02af2dea.css"
+        "/styles.37e17c749edbdc4a.css"
       ],
       "patterns": []
     },
@@ -122,12 +122,12 @@
     "/fondo_giftcard.9c211cf82d8ac597.jpg": "687e24cb3e9d7cc828e7d2337c6d717664cc9fad",
     "/fondo_regalo.bb25ebfefdb77cbb.jpg": "23ff329edbf4e3c089494a990c0c94e78d0e14f2",
     "/fuegos-artificiales.85bf02a59895aeb9.gif": "a9a7df743cadb1b37cef8066bee745edeb815189",
-    "/index.html": "835c20d86a885043686e581eb06269d1e72796a9",
-    "/main.ea23f4e6633b0782.js": "976d490c17f27a3b228be5e0cfe325f491c29178",
-    "/manifest.webmanifest": "c7c6cbecde43b2031f6820097d65bbdf0ddb99ef",
+    "/index.html": "869e1b8140b272d99b8ff7eb7e9ac51506720236",
+    "/main.6cc5f4b8bab96043.js": "5c797b92a50d84fd7f4e2972f8fd33f834637846",
+    "/manifest.webmanifest": "72581e116f3a5cbd6b087851da68f7ebc0cae723",
     "/polyfills.0dce0f59a8967687.js": "e4b363ffd75be375bce4c219dc7b40188aa69e09",
     "/runtime.85f3b3ae6f60c500.js": "ed5f1e5cc711cf5d1a17ebb286a64e04f8ecca96",
-    "/styles.71b9af8c02af2dea.css": "e9142e3edd678c9687af6d31d92bfe3e7a3ea71a",
+    "/styles.37e17c749edbdc4a.css": "b09f3832f73cde101afc0a13fe92820761936c32",
     "/userIcon.7b4a37a59c10fe53.svg": "a2ef0a19016304b51a367fc00b763df389f13711"
   },
   "navigationUrls": [
