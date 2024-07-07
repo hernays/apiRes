@@ -3,7 +3,7 @@ import moment from "moment";
 import { SchemaUsuario } from "../schemas/usuarios.js";
 import webpush from 'web-push';
 import mongoose from "mongoose";
-import jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 moment().locale('es');
 export const guardarAgenda = async (req, res) => {
@@ -15,13 +15,13 @@ export const guardarAgenda = async (req, res) => {
     let valor = 0;
 
     switch (servicio) {
-        case 'Acrilicas': valor = 20; break;
-        case 'Polygel': valor = 20; break;
-        case 'Relleno acrilico/polygel': valor = 17; break;
-        case 'kapping (revestimiento)': valor = 17; break;
-        case 'Esmaltado Permanente': valor = 13; break;
-        case 'Manicura (limpieza)': valor = 13; break;
-        case 'Solo Retiro': valor = 5; break;
+        case 'Acrilicas': valor = 45; break;
+        case 'Polygel': valor = 45; break;
+        case 'Relleno acrilico/polygel': valor = 40; break;
+        case 'kapping (revestimiento)': valor = 40; break;
+        case 'Esmaltado Permanente': valor = 35; break;
+        case 'Manicura (limpieza)': valor = 25; break;
+        case 'Solo Retiro': valor = 10; break;
     }
 
     try {
@@ -33,7 +33,7 @@ export const guardarAgenda = async (req, res) => {
         })
 
         agenda.save();
-        notify(nombre, mes, dia, hora, servicio);
+        notify(nombre, mes, dia, hora, servicio, 'agendar');
         return res.status(200).json({
             msg: 'agenda registrada con exito!!!'
         })
@@ -76,7 +76,7 @@ export const getAgendaDay = async (req, res) => {
             msg: 'No se encontraron registros.'
         })
 
-        const data = agenda.filter( data => data.estado === true)
+        const data = agenda.filter(data => data.estado === true)
         return res.status(200).json({
             data
         })
@@ -116,6 +116,7 @@ export const borrarHoras = async (req, res) => {
     const { nombre, dia } = req.body;
     try {
         const agenda = await SchemaAgendas.deleteOne({ nombre: nombre, dia: dia })
+        notify(nombre, mes, dia, hora, servicio, 'borrar');
         return res.status(200).json({ msg: 'agenda eliminada con exito' });
     } catch (err) {
         return res.status(500).json({ msg: 'error en el servidor' })
@@ -154,35 +155,35 @@ export const totalMes = async (req, res) => {
 
 export const buscarIdUsuario = async (req, res) => {
     const { id, dia, hora, mes } = req.params;
-    try{
-        if(!id || !dia || !hora || !mes ){
-            return res.status(404).json({msg: 'Algo Salio Mal Vuelva a Intentarlo'})
+    try {
+        if (!id || !dia || !hora || !mes) {
+            return res.status(404).json({ msg: 'Algo Salio Mal Vuelva a Intentarlo' })
         }
-        
-        const id_comillas = jwt.verify(id , 'hernaysgonzalez').slice(1);
-        const idUsuario = id_comillas.slice(0 ,id_comillas.length -1 )
-        if(!mongoose.Types.ObjectId.isValid(idUsuario)){
-            return res.status(400).json({msg:'id invalido'})
+
+        const id_comillas = jwt.verify(id, 'hernaysgonzalez').slice(1);
+        const idUsuario = id_comillas.slice(0, id_comillas.length - 1)
+        if (!mongoose.Types.ObjectId.isValid(idUsuario)) {
+            return res.status(400).json({ msg: 'id invalido' })
 
         }
 
         let horaFormato = (hora.includes('_')) ? hora.replace('_', '.') : hora;
-         const agenda = await SchemaAgendas.find({
+        const agenda = await SchemaAgendas.find({
             usuario: idUsuario,
             mes,
             dia,
-            hora:horaFormato
-        }); 
+            hora: horaFormato
+        });
         console.log(agenda)
-        return res.status(200).send({token : agenda[0].token, id : agenda[0]._id})
+        return res.status(200).send({ token: agenda[0].token, id: agenda[0]._id })
 
-    }catch(error){
-        return res.status(500).json({msg:'error en el servidor'});
+    } catch (error) {
+        return res.status(500).json({ msg: 'error en el servidor' });
 
     }
 }
 
-const notify = async (nombre, mes, dia, hora, servicio) => {
+const notify = async (nombre, mes, dia, hora, servicio,tipoSolicitud) => {
 
     const usuariosAdmin = await SchemaUsuario.find({ rol: 'admin' });
     for (const admin of usuariosAdmin) {
@@ -232,8 +233,8 @@ const notify = async (nombre, mes, dia, hora, servicio) => {
             }
             const payload = {
                 "notification": {
-                    "title": "Nueva Hora Agendada",
-                    "body": `${nombre} agendo el ${dia} de ${mes} a las ${(String(hora).split('').length > 2) ? String(hora).split('.')[0] + ':30' : hora + ':00'}  Servicio - ${servicio}`,
+                    "title": (tipoSolicitud === 'agendar') ? "Nueva Hora Agendada" : 'Cancelaron La Hora',
+                    "body": `${nombre} ${(tipoSolicitud === 'agendar') ? 'agendo' : 'cancelo'} el ${dia} de ${mes} a las ${(String(hora).split('').length > 2) ? String(hora).split('.')[0] + ':30' : hora + ':00'}  Servicio - ${servicio}`,
                     "vibrate": [100, 50, 100],
                     "image": "https://res.cloudinary.com/mas58/image/upload/v1665799264/a3ubvxjjoxr934mc1rtn.jpg",
                     "data": {
