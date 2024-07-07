@@ -113,9 +113,10 @@ export const borrarMes = async (req, res) => {
 
 export const borrarHoras = async (req, res) => {
 
-    const { nombre, dia } = req.body;
+    const { nombre, dia, hora, servicio, mes } = req.body;
     try {
         const agenda = await SchemaAgendas.deleteOne({ nombre: nombre, dia: dia })
+        console.log('nombre',nombre, 'dia',dia, 'hora',hora, 'servicio',servicio, 'mes', mes)
         notify(nombre, mes, dia, hora, servicio, 'borrar');
         return res.status(200).json({ msg: 'agenda eliminada con exito' });
     } catch (err) {
