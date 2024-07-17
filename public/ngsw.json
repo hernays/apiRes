@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1720504405269,
+  "timestamp": 1721195058283,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -14,7 +14,7 @@
         "/183.83ff6426dd2be2c0.js",
         "/favicon.ico",
         "/index.html",
-        "/main.3b3177d91b8969f5.js",
+        "/main.a6e2e77138959a02.js",
         "/manifest.webmanifest",
         "/polyfills.0dce0f59a8967687.js",
         "/runtime.85f3b3ae6f60c500.js",
@@ -122,8 +122,8 @@
     "/fondo_giftcard.9c211cf82d8ac597.jpg": "687e24cb3e9d7cc828e7d2337c6d717664cc9fad",
     "/fondo_regalo.bb25ebfefdb77cbb.jpg": "23ff329edbf4e3c089494a990c0c94e78d0e14f2",
     "/fuegos-artificiales.85bf02a59895aeb9.gif": "a9a7df743cadb1b37cef8066bee745edeb815189",
-    "/index.html": "5c2b02b5daa6d0d2c4c66c542d48fcd38645987b",
-    "/main.3b3177d91b8969f5.js": "146a37b914fbfb44f2c7f2c512c9a53060d3f8fb",
+    "/index.html": "38b2500c391551c6b668bb0b06d9eafd2f747f70",
+    "/main.a6e2e77138959a02.js": "5c7815f65519b944b8d65bb6630d266c8e79c547",
     "/manifest.webmanifest": "07e797438840aa3ebcc8572124e3ae1d9ea8684c",
     "/polyfills.0dce0f59a8967687.js": "e4b363ffd75be375bce4c219dc7b40188aa69e09",
     "/runtime.85f3b3ae6f60c500.js": "ed5f1e5cc711cf5d1a17ebb286a64e04f8ecca96",
