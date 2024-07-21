@@ -65,3 +65,28 @@ export const validarUsuarioConectado = (req , res , next) => {
     req.header.id = decode;
     next();
 }
+
+
+
+export const crearEmailJwt = ( req, res, next ) => {
+    const { email } = req.body;
+    const token = jwt.sign({data:email}, 'secretoemail', { expiresIn: '1h'});
+    req.body.jwt = token;
+    next();
+}
+
+export const validarEmailJwt = ( req, res, next ) => {
+
+    const { token } = req.body;
+
+    try{
+       const decode = jwt.verify(token, 'secretoemail');
+        req.body.email = decode.data;
+    }catch(error){
+        console.log(error)
+        return res.status(400).json({msg:'Error de autenticación'});
+    }
+    next();
+
+}
+

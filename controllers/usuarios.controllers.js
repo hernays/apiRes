@@ -31,7 +31,7 @@ export const usuariosGuardar = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' });
+        return res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' });
     }
 }
 
@@ -39,10 +39,10 @@ export const consultarUsuarios = async (req, res) => {
     try {
         const usuarios = await SchemaUsuario.find({ estado: true });
         if (usuarios.length <= 0) return res.status(400).json({ msg: 'No se encontraron usuarios activos' })
-        res.status(200).json({ usuarios })
+        return res.status(200).json({ usuarios })
     } catch (err) {
         console.log(err);
-        res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' });
+        return res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' });
     }
 }
 
@@ -70,14 +70,14 @@ export const borrarUsuario = async (req, res) => {
         const usuario = await SchemaUsuario.findByIdAndUpdate(id, { estado: false });
         if (usuario.estado === false) res.status(400).json({ msg: 'usuario de encuentra desabilitado' })
 
-        res.status(200).json({
+       return res.status(200).json({
             usuario,
             msg: 'Usuario desabilitado'
         })
 
     } catch (err) {
         console.log(err);
-        res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' })
+        return res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' })
     }
 }
 
@@ -85,7 +85,7 @@ export const consultarUsuario = async (req, res) => {
     const { id } = req.header;
     try {
         const usuario = await SchemaUsuario.findById({ _id: id.replace(/["]+/g, '') });
-        res.status(200).json({
+       return  res.status(200).json({
             id: usuario._id,
             nombre: usuario.nombre,
             rol: usuario.rol,
@@ -97,7 +97,7 @@ export const consultarUsuario = async (req, res) => {
 
     } catch (err) {
         console.log(err)
-        res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' })
+        return res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' })
     }
 }
 
@@ -109,9 +109,9 @@ export const actualizarRol = async (req, res) => {
 
         if (usuario.estado === false) return res.status(400).json({ msg: 'Usuario se encuentra desabilitado no se puede cumplir con su requerimiento' })
         if (usuario.rol === 'admin') return res.status(400).json({ msg: 'Usuario ya es administrador' });
-        res.status(200).json({ msg: 'Rol del usuario actualizado con exito !!!' })
+        return res.status(200).json({ msg: 'Rol del usuario actualizado con exito !!!' })
     } catch (error) {
-        res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' });
+        return res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' });
     }
 
 }
@@ -150,9 +150,9 @@ export const cargaImage = async (req, res) => {
             const imgId = imgSplit[imgSplit.length - 1].split('.');
             cloudinary.uploader.destroy("usuariosPerfil/" + imgId[0]);
         }
-        res.status(200).json(secure_url);
+        return res.status(200).json(secure_url);
     } catch (err) {
-        res.status(500).json({
+       return res.status(500).json({
             msg: 'Error en la conexión, contacte a su administrador'
         })
     }
@@ -181,11 +181,11 @@ export const actualizarClave = async (req, res) => {
                 subject: 'DubeNails',
                 html: '<p>Su Contraseña se actualizo con exito!!! </p>'
             });
-        res.status(200).json({ usuario })
+        return res.status(200).json({ msg: 'Actualizado' })
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' });
+        return res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' });
     }
 
 }
@@ -194,7 +194,7 @@ export const enviarEmail = async (req, res) => {
 
     const resend = new Resend('re_hGL4xp6p_MMqQpj1Kt4E2m5Yx8vAjHVsH');
 
-    const { email = '' } = req.body;
+    const { email = '', jwt } = req.body;
 
     const usuario = await SchemaUsuario.find({ correo: email })
     try {
@@ -205,14 +205,18 @@ export const enviarEmail = async (req, res) => {
                 subject: 'DubeNails',
                 html: `
                 <p>Ingresa para actualizar tu contraseña</p>
-                <a href="https://dubenails.com/recuperar/${email}"> Click para Actualizar contraseña</a>
+                <a href="https://dubenails.com/recuperar/${jwt}"> Click para Actualizar contraseña</a>
                 `
-            });
-        res.status(200).json({ usuario })
+            }).then((e) => {
+                console.log('result', e)
+            }).catch(err => {
+                console.log(err)
+            })
+        return res.status(200).json({ jwt })
 
     } catch (error) {
         console.log(error)
-        res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' });
+        return res.status(500).json({ msg: 'Error en la conexión, contacte a su administrador' });
     }
 
 }

@@ -1,7 +1,7 @@
 import express from 'express';
 import { check } from 'express-validator';
 import { consultarUsuarios, actualizarUsuario, usuariosGuardar , borrarUsuario , consultarUsuario, actualizarRol, cargaImage, actualizarClave, enviarEmail } from '../controllers/usuarios.controllers.js';
-import { validarUsuarioAdmin, validarUsuarioConectado } from '../helpers/jwt.js';
+import { crearEmailJwt, validarEmailJwt, validarUsuarioAdmin, validarUsuarioConectado } from '../helpers/jwt.js';
 import { validarCampos , validarEmailExiste, validarRol , validarId } from '../helpers/validarCampos.js';
 
 
@@ -50,8 +50,8 @@ routerUsuario.delete('/usuario/:id' ,[
 
 routerUsuario.post('/rol' , [validarUsuarioAdmin] , actualizarRol )
 
-routerUsuario.post('/actualizarClave', actualizarClave)
+routerUsuario.post('/actualizarClave',validarEmailJwt ,actualizarClave)
 
-routerUsuario.post('/enviarEmail', enviarEmail)
+routerUsuario.post('/enviarEmail', crearEmailJwt ,enviarEmail)
 
 export default routerUsuario;
