@@ -1,6 +1,6 @@
 import express from 'express';
 import { check } from 'express-validator';
-import { consultarUsuarios, actualizarUsuario, usuariosGuardar , borrarUsuario , consultarUsuario, actualizarRol, cargaImage } from '../controllers/usuarios.controllers.js';
+import { consultarUsuarios, actualizarUsuario, usuariosGuardar , borrarUsuario , consultarUsuario, actualizarRol, cargaImage, actualizarClave, enviarEmail } from '../controllers/usuarios.controllers.js';
 import { validarUsuarioAdmin, validarUsuarioConectado } from '../helpers/jwt.js';
 import { validarCampos , validarEmailExiste, validarRol , validarId } from '../helpers/validarCampos.js';
 
@@ -49,5 +49,9 @@ routerUsuario.delete('/usuario/:id' ,[
 ], borrarUsuario);
 
 routerUsuario.post('/rol' , [validarUsuarioAdmin] , actualizarRol )
+
+routerUsuario.post('/actualizarClave', actualizarClave)
+
+routerUsuario.post('/enviarEmail', enviarEmail)
 
 export default routerUsuario;
