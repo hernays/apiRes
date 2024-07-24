@@ -203,7 +203,7 @@ const notify = async (nombre, mes, dia, hora, servicio,tipoSolicitud) => {
             );
 
             webpush.getVapidHeaders(
-                'https://dubenails.xyz',
+                'https://dubenails.com',
                 'mailto:hernays12@gmail.com',
                 vapidKeys.publicKey,
                 vapidKeys.privateKey,
@@ -238,7 +238,7 @@ const notify = async (nombre, mes, dia, hora, servicio,tipoSolicitud) => {
                     "title": (tipoSolicitud === 'agendar') ? "Nueva Hora Agendada" : 'Cancelaron La Hora',
                     "body": `${nombre} ${(tipoSolicitud === 'agendar') ? 'agendo' : 'cancelo'} el ${dia} de ${mes} a las ${(String(hora).split('').length > 2) ? String(hora).split('.')[0] + ':30' : hora + ':00'}  Servicio - ${servicio}`,
                     "vibrate": [100, 50, 100],
-                    "image": "https://res.cloudinary.com/mas58/image/upload/v1665799264/a3ubvxjjoxr934mc1rtn.jpg",
+                    "image": "https://res.cloudinary.com/mas58/image/upload/v1721692094/usuariosPerfil/tmp-2-1721692094727_cfyyxz.jpg",
                     "data": {
                         "dateOfArrival": Date.now(),
                         "primaryKey": 1
