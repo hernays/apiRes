@@ -13,15 +13,16 @@ export const guardarAgenda = async (req, res) => {
 
     const tramo = hora + horaServicio;
     let valor = 0;
-
+    
     switch (servicio) {
+        case 'Manicura (solo limpieza)': valor = 25;
+        case 'Manicura luxury': valor = 35; break;
         case 'Acrilicas': valor = 45; break;
         case 'Polygel': valor = 45; break;
-        case 'Relleno acrilico/polygel': valor = 40; break;
-        case 'kapping (revestimiento)': valor = 40; break;
-        case 'Esmaltado Permanente': valor = 35; break;
-        case 'Manicura (limpieza)': valor = 25; break;
-        case 'Solo Retiro': valor = 10; break;
+        case 'kapping gel': valor = 40; break;
+        case 'Pedicura clasica': valor = 38; break;
+        case 'Pedicura + kapping': valor = 25; break;
+        case 'Retoque': valor = 20; break;
     }
 
     try {

@@ -3,6 +3,7 @@ import { SchemaUsuario } from "../schemas/usuarios.js";
 import { v2 as cloudinary } from 'cloudinary';
 import pkg from 'bcryptjs';
 import { Resend } from 'resend';
+import { main } from "../helpers/nodemailer.js";
 
 cloudinary.config({
     cloud_name: 'mas58',
@@ -160,8 +161,6 @@ export const cargaImage = async (req, res) => {
 
 export const actualizarClave = async (req, res) => {
 
-    const resend = new Resend('re_hGL4xp6p_MMqQpj1Kt4E2m5Yx8vAjHVsH');
-
     const { password , email} = req.body;
 
     const usuario = await SchemaUsuario.find({correo: email});
@@ -175,12 +174,9 @@ export const actualizarClave = async (req, res) => {
     await SchemaUsuario.findByIdAndUpdate({_id: idString}, {password: passwordEncrypt})
     try {
         if (usuario.length === 0) return res.status(400).json({ msg: 'No se encontraron resultados' })
-            resend.emails.send({
-                from: 'onboarding@resend.dev',
-                to: usuario[0].correo,
-                subject: 'DubeNails',
-                html: '<p>Su Contraseña se actualizo con exito!!! </p>'
-            });
+
+            const html = '<p>Su Contraseña se actualizo con exito!!! </p>';
+            main(usuario[0].correo , '',html)
         return res.status(200).json({ msg: 'Actualizado' })
 
     } catch (error) {
@@ -196,22 +192,11 @@ export const enviarEmail = async (req, res) => {
 
     const { email = '', jwt } = req.body;
 
+    
     const usuario = await SchemaUsuario.find({ correo: email })
     try {
         if (usuario.length === 0) return res.status(400).json({ msg: 'No se encontraron resultados' })
-            resend.emails.send({
-                from: 'onboarding@resend.dev',
-                to: usuario[0].correo,
-                subject: 'DubeNails',
-                html: `
-                <p>Ingresa para actualizar tu contraseña</p>
-                <a href="https://dubenails.com/recuperar/${jwt}"> Click para Actualizar contraseña</a>
-                `
-            }).then((e) => {
-                console.log('result', e)
-            }).catch(err => {
-                console.log(err)
-            })
+            main(usuario[0].correo , jwt, '')
         return res.status(200).json({ jwt })
 
     } catch (error) {

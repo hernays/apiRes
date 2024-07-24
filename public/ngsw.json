@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1721593892257,
+  "timestamp": 1721799049749,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -14,7 +14,7 @@
         "/183.83ff6426dd2be2c0.js",
         "/favicon.ico",
         "/index.html",
-        "/main.7abee9a3c82f4cfe.js",
+        "/main.d08ecaff4f9fef0f.js",
         "/manifest.webmanifest",
         "/polyfills.0dce0f59a8967687.js",
         "/runtime.85f3b3ae6f60c500.js",
@@ -54,6 +54,7 @@
         "/assets/img/icono-whatsapp.png",
         "/assets/img/logo_dubenails_arreglada.jpg",
         "/assets/img/regalo.png",
+        "/assets/img/userIcon.jpg",
         "/assets/img/userIcon.svg",
         "/assets/letras/Allura-Regular.eed472f0f82f250f.ttf",
         "/assets/letras/Explora-Regular.cc8129149adbb784.ttf",
@@ -112,6 +113,7 @@
     "/assets/img/icono-whatsapp.png": "0a887aed89460dcf6efdf6cf74e87eb2cfb16641",
     "/assets/img/logo_dubenails_arreglada.jpg": "3786ed7ec74fd5349d2e44ecf8dfb30e61cba940",
     "/assets/img/regalo.png": "a563d806b1d8a63b42269d63318c3a560dadd5fa",
+    "/assets/img/userIcon.jpg": "7cfd3dde75e3b5110814cf0f99f934445119fe6a",
     "/assets/img/userIcon.svg": "a2ef0a19016304b51a367fc00b763df389f13711",
     "/assets/letras/Allura-Regular.eed472f0f82f250f.ttf": "c3a0d84fb39494ca3df33471cda36984f60f1b05",
     "/assets/letras/Explora-Regular.cc8129149adbb784.ttf": "9151dd2acc44f467dd88785b6aebd46e3a983498",
@@ -122,8 +124,8 @@
     "/fondo_giftcard.9c211cf82d8ac597.jpg": "687e24cb3e9d7cc828e7d2337c6d717664cc9fad",
     "/fondo_regalo.bb25ebfefdb77cbb.jpg": "23ff329edbf4e3c089494a990c0c94e78d0e14f2",
     "/fuegos-artificiales.85bf02a59895aeb9.gif": "a9a7df743cadb1b37cef8066bee745edeb815189",
-    "/index.html": "2fbb9f9d098d4134e91ad493d0de664fb5b539b0",
-    "/main.7abee9a3c82f4cfe.js": "14ca1c2fba5907e69f33839cd6910b42b8ed9ad4",
+    "/index.html": "27861b802db9e3cc25c1a084c45f9d99c966cdd9",
+    "/main.d08ecaff4f9fef0f.js": "a398bbfea931c9165a49aa6f079205cb247833f8",
     "/manifest.webmanifest": "07e797438840aa3ebcc8572124e3ae1d9ea8684c",
     "/polyfills.0dce0f59a8967687.js": "e4b363ffd75be375bce4c219dc7b40188aa69e09",
     "/runtime.85f3b3ae6f60c500.js": "ed5f1e5cc711cf5d1a17ebb286a64e04f8ecca96",
