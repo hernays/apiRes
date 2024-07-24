@@ -88,7 +88,7 @@ export const consultarUsuario = async (req, res) => {
         const usuario = await SchemaUsuario.findById({ _id: id.replace(/["]+/g, '') });
        return  res.status(200).json({
             id: usuario._id,
-            nombre: usuario.nombre,
+            nombre: usuario.nombre.replaceAll('_',' '),
             rol: usuario.rol,
             image: usuario.image,
             direccion: usuario.direccion,
@@ -188,11 +188,8 @@ export const actualizarClave = async (req, res) => {
 
 export const enviarEmail = async (req, res) => {
 
-    const resend = new Resend('re_hGL4xp6p_MMqQpj1Kt4E2m5Yx8vAjHVsH');
 
     const { email = '', jwt } = req.body;
-
-    
     const usuario = await SchemaUsuario.find({ correo: email })
     try {
         if (usuario.length === 0) return res.status(400).json({ msg: 'No se encontraron resultados' })

@@ -24,6 +24,7 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
     "mongoose": "^6.4.1",
+    "multiparty": "^4.2.3",
     "nodemailer": "^6.9.14",
     "resend": "^3.4.0",
     "uuid": "^8.3.2",

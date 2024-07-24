@@ -25,7 +25,6 @@ export const guardarArticulos = async (req, res) => {
             msg: 'la extension no es valida'
         })
     }
-
     const { secure_url } = await cloudinary.uploader.upload(tempFilePath, {
         folder: 'articulos',
         format: 'jpg',
@@ -35,6 +34,8 @@ export const guardarArticulos = async (req, res) => {
             height: 500
         }
     })
+
+    //How to get the image and upload it to cloudinary
 
     try {
         const articulo = await SchemaArticulo.create({ usuario, descripcion, fecha, nombre, img: secure_url });
@@ -135,7 +136,7 @@ const notify = async () => {
             );
 
             webpush.getVapidHeaders(
-                'https://dubenails.xyz',
+                'https://dubenails.com',
                 'mailto:hernays12@gmail.com',
                 vapidKeys.publicKey,
                 vapidKeys.privateKey,
@@ -156,7 +157,7 @@ const notify = async () => {
                     "title": "DubeNails",
                     "body": "Nuevo contenido disponible",
                     "vibrate": [100, 50, 100],
-                    "image": "https://res.cloudinary.com/mas58/image/upload/v1665799264/a3ubvxjjoxr934mc1rtn.jpg",
+                    "image": "https://res.cloudinary.com/mas58/image/upload/v1721692094/usuariosPerfil/tmp-2-1721692094727_cfyyxz.jpg",
                     "data": {
                         "dateOfArrival": Date.now(),
                         "primaryKey": 1
