@@ -52,6 +52,7 @@ export const getAgenda = async (req, res) => {
 
         const agenda = await SchemaAgendas.find();
 
+        console.log(agenda)
         if (agenda.length === 0) return res.status(400).json({
             msg: 'No se encontraron registros.'
         })
@@ -75,6 +76,7 @@ export const getAgendaDay = async (req, res) => {
             select: 'nombre apellido rol'
         })
 
+        console.log(agenda)
         if (agenda.length === 0) return res.status(200).json({
             msg: 'No se encontraron registros.'
         })
