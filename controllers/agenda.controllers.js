@@ -20,9 +20,11 @@ export const guardarAgenda = async (req, res) => {
         case 'Acrilicas': valor = 45; break;
         case 'Polygel': valor = 45; break;
         case 'kapping gel': valor = 40; break;
-        case 'Pedicura clasica': valor = 38; break;
-        case 'Pedicura + kapping': valor = 25; break;
+        case 'Pedicura clasica': valor = 40; break;
+        case 'Pedicura + kapping': valor = 45; break;
         case 'Retoque': valor = 20; break;
+        case 'Retiro esmaltado': valor = 15; break;
+        case 'Retiro acrilica o poligel': valor = 25; break;
     }
 
     try {
