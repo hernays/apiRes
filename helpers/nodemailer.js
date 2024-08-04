@@ -52,6 +52,8 @@ margin: 0px auto;
   }
 
 
+  console.log('htnml', html)
+  console.log('correo', correoCliente)
 
   // async..await is not allowed in global scope, must use a wrapper
   let mailOptions = {

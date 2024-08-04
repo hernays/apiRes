@@ -2,6 +2,7 @@ import  express  from "express";
 import { check } from "express-validator";
 import { validarCampos, validarhora } from "../helpers/validarCampos.js";
 import {  actualizarVista, borrarHoras, borrarMes, buscarIdUsuario, getAgenda, getAgendaDay, guardarAgenda, habilitarDia, totalMes } from '../controllers/agenda.controllers.js';
+import { validarUsuarioConectado } from "../helpers/jwt.js";
 
 const routerAgenda = express();
 
@@ -11,16 +12,17 @@ routerAgenda.post('/save' ,[
     check('servicio' , 'el servicio es obligatorio').not().isEmpty(), 
     check('horaServicio', 'el tramo es invalido').isNumeric(),
     check('dia', 'el dia el obligatorio').not().isEmpty(),
-    validarCampos
+    validarCampos,
+    validarUsuarioConectado
 ], guardarAgenda)
-routerAgenda.get('' , getAgenda)
-routerAgenda.post('/estado' , actualizarVista)
-routerAgenda.get('/:dia/:mes' , getAgendaDay)
-routerAgenda.delete('/borrar' , borrarMes)
-routerAgenda.post('/borrarHora', borrarHoras)
-routerAgenda.get('/:dia/:mes/:habilitar', habilitarDia);
-routerAgenda.get('/:mes', totalMes);
-routerAgenda.get('/:id/:mes/:dia/:hora', buscarIdUsuario)
+routerAgenda.get('' , [validarUsuarioConectado], getAgenda)
+routerAgenda.post('/estado' ,[validarUsuarioConectado], actualizarVista)
+routerAgenda.get('/:dia/:mes'  , [validarUsuarioConectado],getAgendaDay)
+routerAgenda.delete('/borrar'  ,[validarUsuarioConectado], borrarMes)
+routerAgenda.post('/borrarHora',[validarUsuarioConectado], borrarHoras)
+routerAgenda.get('/:dia/:mes/:habilitar', [validarUsuarioConectado],habilitarDia);
+routerAgenda.get('/:mes', [validarUsuarioConectado], totalMes);
+routerAgenda.get('/:id/:mes/:dia/:hora', [validarUsuarioConectado], buscarIdUsuario)
 
 
 export default routerAgenda;

@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1721877847090,
+  "timestamp": 1722755936874,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -11,13 +11,13 @@
         "ignoreVary": true
       },
       "urls": [
-        "/183.83ff6426dd2be2c0.js",
+        "/183.0df92395aa3f48ac.js",
         "/favicon.ico",
         "/index.html",
-        "/main.7d2c96245552bf6b.js",
+        "/main.d27d2539ed271488.js",
         "/manifest.webmanifest",
         "/polyfills.0dce0f59a8967687.js",
-        "/runtime.85f3b3ae6f60c500.js",
+        "/runtime.bdf3fb38a73aab58.js",
         "/styles.bf2df1f3dea5e32a.css"
       ],
       "patterns": []
@@ -88,7 +88,7 @@
     }
   ],
   "hashTable": {
-    "/183.83ff6426dd2be2c0.js": "01df1d4a793853e9af8519a8552d4444f94c7972",
+    "/183.0df92395aa3f48ac.js": "2b548fbfd7f80ec08be35b9203ded94209fd842f",
     "/Allura-Regular.eed472f0f82f250f.eed472f0f82f250f.ttf": "c3a0d84fb39494ca3df33471cda36984f60f1b05",
     "/Explora-Regular.cc8129149adbb784.cc8129149adbb784.ttf": "9151dd2acc44f467dd88785b6aebd46e3a983498",
     "/NotoSansSylotiNagri-Regular.dab974f4323dac04.dab974f4323dac04.ttf": "963cb78d67ff8427033ca84d6b0f160bb13d31a1",
@@ -124,11 +124,11 @@
     "/fondo_giftcard.9c211cf82d8ac597.jpg": "687e24cb3e9d7cc828e7d2337c6d717664cc9fad",
     "/fondo_regalo.bb25ebfefdb77cbb.jpg": "23ff329edbf4e3c089494a990c0c94e78d0e14f2",
     "/fuegos-artificiales.85bf02a59895aeb9.gif": "a9a7df743cadb1b37cef8066bee745edeb815189",
-    "/index.html": "c194ec2627870707bca8dbde19f9a949a69fa270",
-    "/main.7d2c96245552bf6b.js": "cecd7c99795b731e312eeaf13d2194eda3e588b6",
+    "/index.html": "f69766f73ce88a61dcfebe5a09aad531f32d308e",
+    "/main.d27d2539ed271488.js": "f07261fa31e4f51012988859233dd68be228c77d",
     "/manifest.webmanifest": "07e797438840aa3ebcc8572124e3ae1d9ea8684c",
     "/polyfills.0dce0f59a8967687.js": "e4b363ffd75be375bce4c219dc7b40188aa69e09",
-    "/runtime.85f3b3ae6f60c500.js": "ed5f1e5cc711cf5d1a17ebb286a64e04f8ecca96",
+    "/runtime.bdf3fb38a73aab58.js": "eb9365eb234a81593bdaf74c4e4946efbe3a8b89",
     "/styles.bf2df1f3dea5e32a.css": "e23d25839392d9f0b2c61cb3356ede1cf945f61b",
     "/userIcon.7b4a37a59c10fe53.svg": "a2ef0a19016304b51a367fc00b763df389f13711"
   },

@@ -4,11 +4,14 @@ import { SchemaUsuario } from "../schemas/usuarios.js";
 import webpush from 'web-push';
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+import { main } from "../helpers/nodemailer.js";
+import 'moment-timezone'
 
-moment().locale('es');
+moment.lang('es');
+moment.tz('America/New_York');
 export const guardarAgenda = async (req, res) => {
 
-    const { nombre, servicio, dia, hora, horaServicio, telefono, mes, id, nuevo, estado, token } = req.body;
+    const { nombre, servicio, dia, hora, horaServicio, telefono, mes, id, nuevo, estado, token, correo } = req.body;
 
 
     const tramo = hora + horaServicio;
@@ -36,6 +39,13 @@ export const guardarAgenda = async (req, res) => {
         })
 
         agenda.save();
+
+        if(correo !== 'duberlysgelian@gmail.com'){
+            const year = moment().year();
+            const mesFormat = moment([year, mes]).format('MMMM');
+            const html = `<p>Su cita se agendo con Exito!!! para el dia ${dia} del mes de ${mesFormat}.</p>`;
+            main(correo, '', html)
+        }
         notify(nombre, mes, dia, hora, servicio, 'agendar');
         return res.status(200).json({
             msg: 'agenda registrada con exito!!!'
@@ -51,8 +61,6 @@ export const getAgenda = async (req, res) => {
     try {
 
         const agenda = await SchemaAgendas.find();
-
-        console.log(agenda)
         if (agenda.length === 0) return res.status(400).json({
             msg: 'No se encontraron registros.'
         })
@@ -66,28 +74,31 @@ export const getAgenda = async (req, res) => {
 
 }
 
-export const getAgendaDay = async (req, res) => {
-
-    console.log('entro en funcion')
+export const getAgendaDay = async (req, res, server = '') => {
     const { dia, mes } = req.params;
     try {
         const agenda = await SchemaAgendas.find({ dia: dia, mes: mes }).populate({
             path: 'usuario',
-            select: 'nombre apellido rol'
+            select: 'nombre apellido rol correo'
         })
-
-        console.log(agenda)
         if (agenda.length === 0) return res.status(200).json({
             msg: 'No se encontraron registros.'
         })
-
         const data = agenda.filter(data => data.estado === true)
-        return res.status(200).json({
-            data
-        })
+        if(server === 'server'){
+            return data;
+        }else{
+            return res.status(200).json({
+                data
+            })
+        }
     } catch (err) {
         console.log(' error')
-        return res.status(500).json({ msg: 'error en el servidor' })
+        if(server){
+            return false;
+        }else{
+            return res.status(500).json({ msg: 'error en el servidor' })
+        }
     }
 
 }
@@ -121,7 +132,6 @@ export const borrarHoras = async (req, res) => {
     const { nombre, dia, hora, servicio, mes } = req.body;
     try {
         const agenda = await SchemaAgendas.deleteOne({ nombre: nombre, dia: dia })
-        console.log('nombre',nombre, 'dia',dia, 'hora',hora, 'servicio',servicio, 'mes', mes)
         notify(nombre, mes, dia, hora, servicio, 'borrar');
         return res.status(200).json({ msg: 'agenda eliminada con exito' });
     } catch (err) {
@@ -180,7 +190,6 @@ export const buscarIdUsuario = async (req, res) => {
             dia,
             hora: horaFormato
         });
-        console.log(agenda)
         return res.status(200).send({ token: agenda[0].token, id: agenda[0]._id })
 
     } catch (error) {
@@ -263,5 +272,33 @@ const notify = async (nombre, mes, dia, hora, servicio,tipoSolicitud) => {
                     console.log('extisosss', exito)
                 })
         }
+    }
+}
+
+export const notificarAgenda = async() => {
+    moment().locale('es')
+    let tomorrow = moment().add(1, 'day').endOf('day').format('D');
+    let mes = moment().month();
+    const req = { params : {
+        dia: tomorrow,
+        mes
+    }} 
+    const res = {}
+    const agenda = await getAgendaDay(req , res, 'server');
+
+    if(agenda.length > 0){
+        const year = moment().year();
+        const mesFormat = moment([year, mes]).format('MMMM');
+        agenda.forEach(element => {
+            const html = `
+            <h1>Recordatorio DubeNails</h1>
+            <p>tienes tu cita de ${element.servicio} para el dia ${element.dia} del mes de ${mesFormat}.</p>
+            <p>Direccion: 50 Starling CT, henrico, 23229</p>
+            `;
+            const correo = element.usuario.correo;
+            main(correo,'', html)
+        })
+    }else {
+        return false;
     }
 }
