@@ -11,7 +11,7 @@ moment.lang('es');
 moment.tz('America/New_York');
 export const guardarAgenda = async (req, res) => {
 
-    const { nombre, servicio, dia, hora, horaServicio, telefono, mes, id, nuevo, estado, token, correo } = req.body;
+    const { nombre, servicio, dia, hora, horaServicio, telefono, mes, id, nuevo, estado, token, correo, diaHabilitado = true } = req.body;
 
 
     const tramo = hora + horaServicio;
@@ -35,7 +35,7 @@ export const guardarAgenda = async (req, res) => {
         await SchemaAgendas.remove({ mes: mes - 2 })
         const usuario = id;
         const agenda = new SchemaAgendas({
-            usuario, nombre, servicio, dia, hora, mes, tramo, telefono, valor, nuevo, token, estado
+            usuario, nombre, servicio, dia, hora, mes, tramo, telefono, valor, nuevo, token, estado, diaHabilitado
         })
 
         agenda.save();
@@ -107,6 +107,9 @@ export const habilitarDia = async (req, res) => {
 
     const { dia, mes, habilitar } = req.params;
     try {
+        if(habilitar){
+            const deleteAgenda = await SchemaAgendas.deleteOne({ nombre: 'nombre'})
+        }
         const agenda = await SchemaAgendas.findOneAndUpdate({ dia: dia, mes: mes }, { diaHabilitado: habilitar });
         return res.status(200).json(
             { habilitar }
