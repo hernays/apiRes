@@ -325,10 +325,6 @@ export const notificarAgenda = async () => {
                 numeroHora = `${element.hora}:00`;
             }
             const html = `
-            <div
-            style="
-            width: 100%;
-            "> 
             <h1>Recordatorio DubeNails</h1>
             <p
             style="
@@ -339,7 +335,6 @@ export const notificarAgenda = async () => {
             <br/>
             Direccion: 50 Starling CT, henrico, 23229
             </p>
-            </div>
             `;
             const correo = element.correo;
             main(correo, '', html)
