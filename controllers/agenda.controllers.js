@@ -16,7 +16,7 @@ export const guardarAgenda = async (req, res) => {
 
     const tramo = hora + horaServicio;
     let valor = 0;
-    
+
     switch (servicio) {
         case 'Manicura (solo limpieza)': valor = 25;
         case 'Manicura luxury': valor = 35; break;
@@ -40,7 +40,7 @@ export const guardarAgenda = async (req, res) => {
 
         agenda.save();
 
-        if(correo !== 'duberlysgelian@gmail.com'){
+        if (correo !== 'duberlysgelian@gmail.com') {
             const year = moment().year();
             const mesFormat = moment([year, mes]).format('MMMM');
             const html = `<p>Su cita se agendo con Exito!!! para el dia ${dia} del mes de ${mesFormat}.</p>`;
@@ -85,18 +85,18 @@ export const getAgendaDay = async (req, res, server = '') => {
             msg: 'No se encontraron registros.'
         })
         const data = agenda.filter(data => data.estado === true)
-        if(server === 'server'){
+        if (server === 'server') {
             return data;
-        }else{
+        } else {
             return res.status(200).json({
                 data
             })
         }
     } catch (err) {
         console.log(' error')
-        if(server){
+        if (server) {
             return false;
-        }else{
+        } else {
             return res.status(500).json({ msg: 'error en el servidor' })
         }
     }
@@ -107,8 +107,8 @@ export const habilitarDia = async (req, res) => {
 
     const { dia, mes, habilitar } = req.params;
     try {
-        if(habilitar){
-            const deleteAgenda = await SchemaAgendas.deleteOne({ nombre: 'nombre'})
+        if (habilitar) {
+            const deleteAgenda = await SchemaAgendas.deleteOne({ nombre: 'nombre' })
         }
         const agenda = await SchemaAgendas.findOneAndUpdate({ dia: dia, mes: mes }, { diaHabilitado: habilitar });
         return res.status(200).json(
@@ -201,7 +201,7 @@ export const buscarIdUsuario = async (req, res) => {
     }
 }
 
-const notify = async (nombre, mes, dia, hora, servicio,tipoSolicitud) => {
+const notify = async (nombre, mes, dia, hora, servicio, tipoSolicitud) => {
 
     const usuariosAdmin = await SchemaUsuario.find({ rol: 'admin' });
     for (const admin of usuariosAdmin) {
@@ -278,38 +278,76 @@ const notify = async (nombre, mes, dia, hora, servicio,tipoSolicitud) => {
     }
 }
 
-export const notificarAgenda = async(fecha) => {
-    // let tomorrow = moment().add(1, 'day').endOf('day').format('D');
-    // let mes = moment().month();
-    
-    // console.log('mes----', mes , 'dia/////', tomorrow)
+export const notificarAgenda = async () => {
+
+    const fecha = moment().tz('America/New_York').format('DD/MM/YYYY').split('/');
+    const hora = moment().tz('America/New_York').format('HH').split('/')[0];
+
+    console.log(moment().hour(18).format())
+
+    // se ejecuta 24Hrs
     const mes = Number(fecha[1]) - 1;
     const dia = Number(fecha[0]);
-    const year =  Number(fecha[2]);
-    console.log('year///', year)
-    const req = { params : {
-        dia,
-        mes
-    }} 
+    const year = Number(fecha[2]);
 
-    // console.log( 'llllllll ',req.params)
+    const req = {
+        params: {
+            dia,
+            mes
+        }
+    }
+
     const res = {}
-    const agenda = await getAgendaDay(req , res, 'server');
+    const agenda = await getAgendaDay(req, res, 'server');
 
     console.log('agendaaaaa', agenda)
 
-    if(agenda.length > 0){
+    if (agenda.length > 0) {
         const mesFormat = moment([year, mes]).format('MMMM');
         agenda.forEach(element => {
+            if (!element.correo) {
+                return false;
+            }
+            if(element.mes !== mes ){
+                return false;
+            }
+            if(Number(element.dia) !== dia){
+                return false;
+
+            }
+
+            let numeroHora = '';
+            if(element.hora.toString().length > 2){
+                numeroHora = element.hora.toString().split('.')[0];
+                console.log('numeroHora', numeroHora)
+                numeroHora = `${element.hora}:30`;
+            }else {
+                numeroHora = `${element.hora}:00`;
+            }
             const html = `
+            <div
+            style="
+            align-items: center;
+            display: flex;
+            width: 100%;
+            flex-flow: column;
+            "> 
             <h1>Recordatorio DubeNails</h1>
-            <p>tienes tu cita de ${element.servicio} para el dia ${element.dia} del mes de ${mesFormat}.</p>
-            <p>Direccion: 50 Starling CT, henrico, 23229</p>
+            <p
+            style="
+            font-size: 20px;
+            "
+            >
+            Tienes tu cita de ${element.servicio} para el dia ${element.dia} del mes de ${mesFormat} a las ${numeroHora}:. 
+            <br/>
+            Direccion: 50 Starling CT, henrico, 23229
+            </p>
+            </div>
             `;
-            const correo = agenda.correo;
-            main(correo,'', html)
+            const correo = element.correo;
+            main(correo, '', html)
         })
-    }else {
+    } else {
         return false;
     }
 }

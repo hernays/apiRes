@@ -2,8 +2,6 @@
 import  jwt, { decode } from "jsonwebtoken";
 import { SchemaUsuario } from "../schemas/usuarios.js";
 import pkg from 'bcryptjs';
-import moment from "moment/moment.js";
-import { notificarAgenda } from "../controllers/agenda.controllers.js";
 
 export const generarJWT = async( req , res , next ) => {
 
@@ -55,12 +53,6 @@ export const validarUsuarioConectado = (req , res , next) => {
     const { authorization } = req.headers;
 
     let decode;
-
-
-    // fecha para notificar por correo a los usuarios
-    const fecha = moment().tz('America/New_York').format('DD/MM/YYYY').split('/');
-    notificarAgenda(fecha);
-    //
 
     try{
         decode = jwt.verify( authorization , 'hernaysgonzalez');

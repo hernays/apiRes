@@ -15,6 +15,7 @@ import { dirname } from 'path';
 import routerNotificacion from '../router/notificacion.js';
 import routerPagos from '../router/pagos.js';
 import { notificarAgenda } from '../controllers/agenda.controllers.js';
+import moment from 'moment/moment.js';
 
 export class Server {
     constructor() {
@@ -42,6 +43,11 @@ export class Server {
             useTempFiles: true,
             tempFileDir: '/tmp/'
         }));
+
+        //  const hora = moment().tz('America/New_York').format('HH').split('/')[0];
+        //     console.log(' hora', hora)
+
+        //     notificarAgenda()
     }
 
     router() {

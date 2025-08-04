@@ -1,7 +1,7 @@
 import  express  from "express";
 import { check } from "express-validator";
 import { validarCampos, validarhora } from "../helpers/validarCampos.js";
-import {  actualizarVista, borrarHoras, borrarMes, buscarIdUsuario, getAgenda, getAgendaDay, guardarAgenda, habilitarDia, totalMes } from '../controllers/agenda.controllers.js';
+import {  actualizarVista, borrarHoras, borrarMes, buscarIdUsuario, getAgenda, getAgendaDay, guardarAgenda, habilitarDia, notificarAgenda, totalMes } from '../controllers/agenda.controllers.js';
 import { validarUsuarioConectado } from "../helpers/jwt.js";
 
 const routerAgenda = express();
@@ -23,6 +23,7 @@ routerAgenda.post('/borrarHora',[validarUsuarioConectado], borrarHoras)
 routerAgenda.get('/:dia/:mes/:habilitar', [validarUsuarioConectado],habilitarDia);
 routerAgenda.get('/:mes', [validarUsuarioConectado], totalMes);
 routerAgenda.get('/:id/:mes/:dia/:hora', [validarUsuarioConectado], buscarIdUsuario)
+routerAgenda.get('/check', notificarAgenda )
 
 
 export default routerAgenda;
