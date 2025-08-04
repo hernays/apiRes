@@ -47,7 +47,10 @@ export class Server {
         //  const hora = moment().tz('America/New_York').format('HH').split('/')[0];
         //     console.log(' hora', hora)
 
-        //     notificarAgenda()
+        setInterval(() => {
+            notificarAgenda()
+        }, 86400000)
+            notificarAgenda()
     }
 
     router() {
