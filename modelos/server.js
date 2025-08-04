@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import * as cron from 'node-cron';
 import { conexionDB } from '../DB/connect.js';
 import routerUsuario from '../router/usuarios.js';
 import routerAuth from '../router/auth.js';
@@ -61,13 +60,6 @@ export class Server {
     iniciar() {
         this.app.listen(process.env.PORT || 1000, () => {
             console.log('Server Corriendo en el puerto ', process.env.PORT);
-            cron.schedule('0 8 * * *', () => {
-                console.log('running a task every day at 8amß');
-                notificarAgenda();
-              },  {
-                scheduled: true,
-                timezone: "America/New_York"
-              });
         });
         this.conexionDb();
     }

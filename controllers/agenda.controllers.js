@@ -35,7 +35,7 @@ export const guardarAgenda = async (req, res) => {
         await SchemaAgendas.remove({ mes: mes - 2 })
         const usuario = id;
         const agenda = new SchemaAgendas({
-            usuario, nombre, servicio, dia, hora, mes, tramo, telefono, valor, nuevo, token, estado, diaHabilitado
+            usuario, nombre, servicio, dia, hora, mes, tramo, telefono, valor, nuevo, token, estado, diaHabilitado, correo
         })
 
         agenda.save();
@@ -278,19 +278,27 @@ const notify = async (nombre, mes, dia, hora, servicio,tipoSolicitud) => {
     }
 }
 
-export const notificarAgenda = async() => {
-    moment().locale('es')
-    let tomorrow = moment().add(1, 'day').endOf('day').format('D');
-    let mes = moment().month();
+export const notificarAgenda = async(fecha) => {
+    // let tomorrow = moment().add(1, 'day').endOf('day').format('D');
+    // let mes = moment().month();
+    
+    // console.log('mes----', mes , 'dia/////', tomorrow)
+    const mes = Number(fecha[1]) - 1;
+    const dia = Number(fecha[0]);
+    const year =  Number(fecha[2]);
+    console.log('year///', year)
     const req = { params : {
-        dia: tomorrow,
+        dia,
         mes
     }} 
+
+    // console.log( 'llllllll ',req.params)
     const res = {}
     const agenda = await getAgendaDay(req , res, 'server');
 
+    console.log('agendaaaaa', agenda)
+
     if(agenda.length > 0){
-        const year = moment().year();
         const mesFormat = moment([year, mes]).format('MMMM');
         agenda.forEach(element => {
             const html = `
@@ -298,7 +306,7 @@ export const notificarAgenda = async() => {
             <p>tienes tu cita de ${element.servicio} para el dia ${element.dia} del mes de ${mesFormat}.</p>
             <p>Direccion: 50 Starling CT, henrico, 23229</p>
             `;
-            const correo = element.usuario.correo;
+            const correo = agenda.correo;
             main(correo,'', html)
         })
     }else {

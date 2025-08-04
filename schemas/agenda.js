@@ -32,6 +32,11 @@ const SchemaAgenda = Schema({
         requied:false,
         default:null
     },
+    correo:{
+        type:String,
+        requied:false,
+        default:null
+    },
     valor:{
         type:Number,
         requied:false,
