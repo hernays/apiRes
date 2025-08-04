@@ -327,10 +327,7 @@ export const notificarAgenda = async () => {
             const html = `
             <div
             style="
-            align-items: center;
-            display: flex;
             width: 100%;
-            flex-flow: column;
             "> 
             <h1>Recordatorio DubeNails</h1>
             <p
