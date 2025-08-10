@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import { main } from "../helpers/nodemailer.js";
 import 'moment-timezone'
+import { formatTime } from "../helpers/formatTime.js";
+import { SchemaUsuarioRegister } from "../schemas/usuarioRegister.js";
 
 moment.lang('es');
 moment.tz('America/New_York');
@@ -26,11 +28,25 @@ export const guardarAgenda = async (req, res) => {
         case 'Pedicura clasica': valor = 40; break;
         case 'Pedicura + kapping': valor = 45; break;
         case 'Retoque': valor = 20; break;
-        case 'Retiro esmaltado': valor = 15; break;
-        case 'Retiro acrilica o poligel': valor = 25; break;
+        case 'Retiro de esmaltado': valor = 15; break;
+        case 'Retiro de acrilica o poligel': valor = 25; break;
     }
 
+
+
     try {
+
+        const getUsuariosRegister = await SchemaUsuarioRegister.find({correo: correo});
+
+        console.log('getUsuariosRegister',getUsuariosRegister)
+        if(!getUsuariosRegister.length){
+            // guardar Usuario Express
+            const usuarioRegister = new SchemaUsuarioRegister({
+                nombre, correo, telefono
+            });
+            usuarioRegister.save();
+        }
+
 
         await SchemaAgendas.remove({ mes: mes - 2 })
         const usuario = id;
@@ -43,7 +59,15 @@ export const guardarAgenda = async (req, res) => {
         if (correo !== 'duberlysgelian@gmail.com') {
             const year = moment().year();
             const mesFormat = moment([year, mes]).format('MMMM');
-            const html = `<p>Su cita se agendo con Exito!!! para el dia ${dia} del mes de ${mesFormat}.</p>`;
+            const numeroHora = formatTime(hora);
+            const html = `<p
+            style="
+            font-size: 18px;
+            "
+            >Su cita se agendo con Exito!!! para el dia ${dia} del mes de ${mesFormat} a las ${numeroHora}</p>
+            <br/> <br/>
+            Direccion: 50 Starling CT, henrico, 23229
+            `;
             main(correo, '', html)
         }
         notify(nombre, mes, dia, hora, servicio, 'agendar');
@@ -81,9 +105,11 @@ export const getAgendaDay = async (req, res, server = '') => {
             path: 'usuario',
             select: 'nombre apellido rol correo'
         })
-        if (agenda.length === 0) return res.status(200).json({
-            msg: 'No se encontraron registros.'
-        })
+        if (agenda.length === 0) {
+            return res.status(200).json({
+                msg: 'No se encontraron registros.'
+            })
+        }
         const data = agenda.filter(data => data.estado === true)
         if (server === 'server') {
             return data;
@@ -93,7 +119,7 @@ export const getAgendaDay = async (req, res, server = '') => {
             })
         }
     } catch (err) {
-        console.log(' error')
+        console.log(' error', err)
         if (server) {
             return false;
         } else {
@@ -134,8 +160,25 @@ export const borrarHoras = async (req, res) => {
 
     const { nombre, dia, hora, servicio, mes } = req.body;
     try {
+        const agendaGet = await SchemaAgendas.find({ dia: dia, mes: mes }).populate({
+            path: 'usuario',
+            select: 'correo'
+        })
+        let email = '';
+        agendaGet.forEach(element => {
+            console.log('elementssss', element)
+            console.log('diaaa', dia)
+            if (Number(element.dia) === dia) {
+                email = element.correo;
+            }
+
+        })
         const agenda = await SchemaAgendas.deleteOne({ nombre: nombre, dia: dia })
+
+        console.log('agendasss', agenda)
+
         notify(nombre, mes, dia, hora, servicio, 'borrar');
+        notificarAgendaDelete(servicio, dia, mes, hora, email);
         return res.status(200).json({ msg: 'agenda eliminada con exito' });
     } catch (err) {
         return res.status(500).json({ msg: 'error en el servidor' })
@@ -281,9 +324,6 @@ const notify = async (nombre, mes, dia, hora, servicio, tipoSolicitud) => {
 export const notificarAgenda = async () => {
 
     const fecha = moment().tz('America/New_York').format('DD/MM/YYYY').split('/');
-    const hora = moment().tz('America/New_York').format('HH').split('/')[0];
-
-    console.log(moment().hour(18).format())
 
     // se ejecuta 24Hrs
     const mes = Number(fecha[1]) - 1;
@@ -296,50 +336,85 @@ export const notificarAgenda = async () => {
             mes
         }
     }
-
     const res = {}
-    const agenda = await getAgendaDay(req, res, 'server');
 
-    console.log('agendaaaaa', agenda)
+    const agendas = [];
+    // req.params.dia = dia actual
+    const consultAgenda = await getAgendaDay(req, res, 'server');
+    // req.params.dia = dia siguiente
+    req.params.dia = dia + 1;
+    const consultAgenda2 = await getAgendaDay(req, res, 'server');
+    if (consultAgenda !== false && consultAgenda.length > 0) {
+        agendas.push(...consultAgenda)
+    }
+    console.log('consultAgenda2', consultAgenda2)
+    if (consultAgenda2 !== false) {
+        if (consultAgenda2.length > 0) {
+            agendas.push(...consultAgenda2);
+        }
+    }
 
-    if (agenda.length > 0) {
+    if (agendas.length) {
         const mesFormat = moment([year, mes]).format('MMMM');
-        agenda.forEach(element => {
+        agendas.forEach(element => {
             if (!element.correo) {
                 return false;
             }
-            if(element.mes !== mes ){
+            if (element.mes !== mes) {
                 return false;
             }
-            if(Number(element.dia) !== dia){
-                return false;
+            // 10 - 1 === 9  = pasa ok 
+            // 9 - 1 === 9  = pasa al else
+            // 11 - 1 10 = 9
+            if (Number(element.dia) - 1 === dia) {
+                console.log('paso bien 1')
+            } else {
+                // 9 === 9 = true
+                if (Number(element.dia) === dia) {
+                    console.log('paso bien 2')
+                } else {
+                    return false;
+                }
+            };
+            const numeroHora = formatTime(element.hora);
 
-            }
-
-            let numeroHora = '';
-            if(element.hora.toString().length > 2){
-                numeroHora = element.hora.toString().split('.')[0];
-                console.log('numeroHora', numeroHora)
-                numeroHora = `${element.hora}:30`;
-            }else {
-                numeroHora = `${element.hora}:00`;
-            }
             const html = `
             <h1>Recordatorio DubeNails</h1>
             <p
             style="
-            font-size: 20px;
+            font-size: 18px;
             "
             >
-            Tienes tu cita de ${element.servicio} para el dia ${element.dia} del mes de ${mesFormat} a las ${numeroHora}:. 
-            <br/>
+            Tienes tu cita de ${element.servicio} para el dia ${element.dia} del mes de ${mesFormat} a las ${numeroHora} 
+            <br/> <br/>
             Direccion: 50 Starling CT, henrico, 23229
             </p>
             `;
             const correo = element.correo;
+
             main(correo, '', html)
         })
     } else {
         return false;
     }
+}
+
+
+export const notificarAgendaDelete = async (servicio, dia, mes, hora, email) => {
+    const mesFormat = moment([mes]).format('MMMM');
+    const numeroHora = formatTime(hora);
+    const html = `
+            <h1>Recordatorio DubeNails</h1>
+            <p
+            style="
+            font-size: 18px;
+            "
+            >
+            Tu cita de ${servicio} del dia ${dia} del mes de ${mesFormat} a las ${numeroHora} se cancelo con exito!!!
+            </p>
+            `;
+    // const correo = element.correo;
+    console.log('emailssss', email)
+    const correo = email;
+    main(correo, '', html)
 }
