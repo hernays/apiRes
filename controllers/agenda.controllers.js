@@ -36,16 +36,19 @@ export const guardarAgenda = async (req, res) => {
 
     try {
 
-        const getUsuariosRegister = await SchemaUsuarioRegister.find({correo: correo});
-
-        console.log('getUsuariosRegister',getUsuariosRegister)
-        if(!getUsuariosRegister.length){
-            // guardar Usuario Express
-            const usuarioRegister = new SchemaUsuarioRegister({
-                nombre, correo, telefono
-            });
-            usuarioRegister.save();
+        if(correo.length){
+            const getUsuariosRegister = await SchemaUsuarioRegister.find({correo: correo.trim()});
+            console.log('getUsuariosRegister',getUsuariosRegister)
+            if(!getUsuariosRegister.length){
+                // guardar Usuario Express
+                const usuarioRegister = new SchemaUsuarioRegister({
+                    nombre, correo, telefono
+                });
+                usuarioRegister.save();
+            }
         }
+
+        
 
 
         await SchemaAgendas.remove({ mes: mes - 2 })
@@ -83,6 +86,7 @@ export const guardarAgenda = async (req, res) => {
 export const getAgenda = async (req, res) => {
 
     try {
+        console.log('acaaaaa 1')
 
         const agenda = await SchemaAgendas.find();
         if (agenda.length === 0) return res.status(400).json({
@@ -100,6 +104,7 @@ export const getAgenda = async (req, res) => {
 
 export const getAgendaDay = async (req, res, server = '') => {
     const { dia, mes } = req.params;
+    console.log('acaaaa 2')
     try {
         const agenda = await SchemaAgendas.find({ dia: dia, mes: mes }).populate({
             path: 'usuario',
@@ -204,10 +209,28 @@ export const actualizarVista = async (req, res) => {
 export const totalMes = async (req, res) => {
 
     const { mes } = req.params;
+    console.log('aquiiiiii')
 
     try {
         const agendas = await SchemaAgendas.find({ mes: mes }).select({ 'valor': 1, _id: 0 })
         return res.status(200).json(agendas)
+
+    } catch (error) {
+        return res.status(500).json({ msg: 'error en el servidor' });
+    }
+
+}
+
+export const usuariosMes = async (req, res) => {
+
+    console.log('pasando alaaa')
+    const { mes } = req.params;
+
+    console.log('requestt', req.params)
+    try {
+        const agendas = await SchemaAgendas.find({mes})
+
+        return res.status(200).json({agendas})
 
     } catch (error) {
         return res.status(500).json({ msg: 'error en el servidor' });
@@ -390,8 +413,8 @@ export const notificarAgenda = async () => {
             Direccion: 50 Starling CT, henrico, 23229
             </p>
             `;
-            const correo = element.correo;
-
+            // const correo = element.correo;
+const correo = 'hernaysg@gmail.com';
             main(correo, '', html)
         })
     } else {
@@ -415,6 +438,6 @@ export const notificarAgendaDelete = async (servicio, dia, mes, hora, email) => 
             `;
     // const correo = element.correo;
     console.log('emailssss', email)
-    const correo = email;
+    const correo = 'hernaysg@gmail.com';
     main(correo, '', html)
 }
