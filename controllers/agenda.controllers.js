@@ -21,12 +21,12 @@ export const guardarAgenda = async (req, res) => {
 
     switch (servicio) {
         case 'Manicura (solo limpieza)': valor = 25;
-        case 'Manicura luxury': valor = 35; break;
-        case 'Acrilicas': valor = 45; break;
-        case 'Polygel': valor = 45; break;
-        case 'kapping gel': valor = 40; break;
-        case 'Pedicura clasica': valor = 40; break;
-        case 'Pedicura + kapping': valor = 45; break;
+        case 'Manicura luxury': valor =45; break;
+        case 'Acrilicas': valor = 50; break;
+        case 'Polygel': valor = 50; break;
+        case 'kapping gel': valor = 50; break;
+        case 'Pedicura clasica': valor = 45; break;
+        case 'Pedicura + kapping': valor = 50; break;
         case 'Retoque': valor = 20; break;
         case 'Retiro de esmaltado': valor = 15; break;
         case 'Retiro de acrilica o poligel': valor = 25; break;
