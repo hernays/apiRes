@@ -413,8 +413,7 @@ export const notificarAgenda = async () => {
             Direccion: 50 Starling CT, henrico, 23229
             </p>
             `;
-            // const correo = element.correo;
-const correo = 'hernaysg@gmail.com';
+            const correo = element.correo;
             main(correo, '', html)
         })
     } else {
@@ -436,8 +435,6 @@ export const notificarAgendaDelete = async (servicio, dia, mes, hora, email) => 
             Tu cita de ${servicio} del dia ${dia} del mes de ${mesFormat} a las ${numeroHora} se cancelo con exito!!!
             </p>
             `;
-    // const correo = element.correo;
-    console.log('emailssss', email)
-    const correo = 'hernaysg@gmail.com';
+    const correo = element.correo;
     main(correo, '', html)
 }
